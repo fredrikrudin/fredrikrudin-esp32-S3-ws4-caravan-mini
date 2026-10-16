@@ -1,0 +1,83 @@
+// esp32-s3-ws4-caravan-mini v1.0
+/*
+ * esp32-s3-ws4-caravan-mini
+ * Caravan display for the Waveshare ESP32-S3-Touch-LCD-4 (V4, CH32V003 IO expander):
+ * the esp32-S3-ws4-caravan firmware without relays, Shelly devices, schedules and
+ * the battery BMS, kept small for stability.
+ *
+ * Tabs: Home | Power (Victron BLE) | Ruuvi (RuuviTag) | Weather | Settings
+ * Web page with battery, solar, Victron, Ruuvi and weather: http://<board IP>/ (JSON at /json)
+ * See README.md for libraries and Arduino IDE settings.
+ *
+ * Copyright (c) 2026 Fredrik Rudin
+ * Licensed under CC BY-NC 4.0 (non-commercial use only), see LICENSE.md and
+ * https://creativecommons.org/licenses/by-nc/4.0/
+ * Written with the help of Claude, an AI model by Anthropic.
+ */
+
+#include "app.h"
+
+void setup() {
+  USBSerial.begin(115200);
+  {  // the serial monitor switch first, so the boot lines follow it too
+    Preferences p;
+    p.begin("wx", true);
+    feat_serial = p.getBool("serial", false);
+    p.end();
+    serial_apply();
+  }
+  serf("Internal heap at start: %u\n", heap_caps_get_free_size(MALLOC_CAP_INTERNAL));
+
+  board_init();  // IO expander, touch, display, LVGL
+  log_begin();   // Serial + ring buffer (+ TF card when switched on)
+  log_boot_banner();
+  watchdog_begin();  // says why the last run ended, if it wasn't a normal restart
+  if (feat_sdlog && !sd_log_mount())
+    log_fault("SD: not mounted at startup; it is retried once a minute, or use Mount in Settings");
+  history_begin();
+  alarms_begin();
+  sw6106_begin();  // stop the power bank chip switching off under a light load
+  state_init();
+  load_cfg();
+  splash_show();  // the starting screen, now that its settings are known
+
+  build_ui();
+  set_backlight(bl_normal);
+  serf("Internal heap after UI: %u\n", heap_caps_get_free_size(MALLOC_CAP_INTERNAL));
+
+  /* WiFi first: its buffers must be in DMA-capable internal RAM, and Bluetooth
+     would otherwise take that memory before WiFi gets a chance. */
+  net_start();
+  if (!net_wait_wifi_init(5000)) USBSerial.println("WiFi init did not finish in time");
+  serf("Internal heap after WiFi init: %u\n", heap_caps_get_free_size(MALLOC_CAP_INTERNAL));
+
+  ble_start();
+  serf("Setup done. Internal heap free %u, largest block %u\n",
+                   heap_caps_get_free_size(MALLOC_CAP_INTERNAL),
+                   heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL));
+
+  splash_finish();  // the starting screen stays up for 5 s from power-on
+  wd_beat();        // setup is done: the watchdog counts from here
+}
+
+void loop() {
+  wd_stage("ble");
+  ble_scan_service();
+  wd_stage("web");
+  web_service();
+  wd_stage("csv");
+  csv_service();
+  wd_stage("history");
+  history_service();
+  wd_stage("perf");
+  perf_service();
+  wd_stage("battery mode");
+  power_battery_service();
+  wd_stage("battery monitor");
+  battery_monitor();
+  wd_stage("sw6106");
+  sw6106_service();
+  wd_stage("ui");
+  lv_timer_handler();
+  delay(5);
+}
