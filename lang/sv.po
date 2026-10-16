@@ -1,0 +1,1616 @@
+# esp32-s3-ws4-caravan-mini v1.0
+# Swedish translation of the esp32-s3-ws4-caravan-mini display.
+# Edit with Poedit, then run: python3 tools/i18n.py build
+msgid ""
+msgstr ""
+"Project-Id-Version: esp32-s3-ws4-caravan-mini\n"
+"Language: sv\n"
+"X-Language-Name: Svenska\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#, c-format
+#: alarms.cpp:95
+msgid "Battery %.0f%% - charge now"
+msgstr "Batteri %.0f%% - ladda nu"
+
+#, c-format
+#: alarms.cpp:96
+msgid "Battery low: %.0f%%"
+msgstr "Lågt batteri: %.0f%%"
+
+#, c-format
+#: alarms.cpp:99
+msgid "Battery voltage low: %.2f V"
+msgstr "Låg batterispänning: %.2f V"
+
+#, c-format
+#: alarms.cpp:100
+msgid "Battery voltage high: %.2f V"
+msgstr "Hög batterispänning: %.2f V"
+
+#, c-format
+#: alarms.cpp:103
+msgid "Battery empty in %dh %02dm"
+msgstr "Batteriet tomt om %dh %02dm"
+
+#, c-format
+#: alarms.cpp:109
+msgid "%s: wrong key"
+msgstr "%s: fel nyckel"
+
+#, c-format
+#: alarms.cpp:111
+msgid "%s: no signal"
+msgstr "%s: ingen signal"
+
+#, c-format
+#: alarms.cpp:115
+msgid "Inverter: %s"
+msgstr "Växelriktare: %s"
+
+#, c-format
+#: alarms.cpp:130
+msgid "Wind %.0f m/s - take the awning in"
+msgstr "Vind %.0f m/s - ta in markisen"
+
+#: alarms.cpp:138
+msgid "WiFi lost"
+msgstr "WiFi borta"
+
+#, c-format
+#: alarms.cpp:160
+msgid "Board battery %.2f V - shutting down soon"
+msgstr "Kortets batteri %.2f V - stängs snart av"
+
+#, c-format
+#: alarms.cpp:161
+msgid "Board battery low (%.2f V)"
+msgstr "Kortets batteri lågt (%.2f V)"
+
+#: alarms.cpp:165
+msgid "SD card not available"
+msgstr "SD-kortet är inte tillgängligt"
+
+#: app.h:93
+msgid "Press Scan"
+msgstr "Tryck på Sök"
+
+#: app.h:94
+msgid "No networks found"
+msgstr "Inga nätverk hittades"
+
+#: datalog.cpp:13 sdlog.cpp:33
+msgid "Not started"
+msgstr "Inte startad"
+
+#: datalog.cpp:22 sdlog.cpp:392
+msgid "No card mounted"
+msgstr "Inget kort monterat"
+
+#: datalog.cpp:101
+msgid "Cannot write data.csv"
+msgstr "Kan inte skriva data.csv"
+
+#, c-format
+#: datalog.cpp:126
+msgid "Last entry %s"
+msgstr "Senaste rad %s"
+
+#: datalog.cpp:126
+msgid "(no time yet)"
+msgstr "(ingen tid än)"
+
+#: lang.cpp:167
+msgid "Sunday"
+msgstr "söndag"
+
+#: lang.cpp:167
+msgid "Monday"
+msgstr "måndag"
+
+#: lang.cpp:167
+msgid "Tuesday"
+msgstr "tisdag"
+
+#: lang.cpp:167
+msgid "Wednesday"
+msgstr "onsdag"
+
+#: lang.cpp:168
+msgid "Thursday"
+msgstr "torsdag"
+
+#: lang.cpp:168
+msgid "Friday"
+msgstr "fredag"
+
+#: lang.cpp:168
+msgid "Saturday"
+msgstr "lördag"
+
+#: lang.cpp:169
+msgid "January"
+msgstr "januari"
+
+#: lang.cpp:169
+msgid "February"
+msgstr "februari"
+
+#: lang.cpp:169
+msgid "March"
+msgstr "mars"
+
+#: lang.cpp:169
+msgid "April"
+msgstr "april"
+
+#: lang.cpp:170
+msgid "May"
+msgstr "maj"
+
+#: lang.cpp:170
+msgid "June"
+msgstr "juni"
+
+#: lang.cpp:170
+msgid "July"
+msgstr "juli"
+
+#: lang.cpp:170
+msgid "August"
+msgstr "augusti"
+
+#: lang.cpp:171
+msgid "September"
+msgstr "september"
+
+#: lang.cpp:171
+msgid "October"
+msgstr "oktober"
+
+#: lang.cpp:171
+msgid "November"
+msgstr "november"
+
+#: lang.cpp:171
+msgid "December"
+msgstr "december"
+
+#: lang.cpp:172
+msgid "Mo"
+msgstr "Må"
+
+#: lang.cpp:172
+msgid "Tu"
+msgstr "Ti"
+
+#: lang.cpp:172
+msgid "We"
+msgstr "On"
+
+#: lang.cpp:172
+msgid "Th"
+msgstr "To"
+
+#: lang.cpp:172
+msgid "Fr"
+msgstr "Fr"
+
+#: lang.cpp:172
+msgid "Sa"
+msgstr "Lö"
+
+#: lang.cpp:172
+msgid "Su"
+msgstr "Sö"
+
+#: lang.cpp:174
+msgid "Mon"
+msgstr "Mån"
+
+#: lang.cpp:174
+msgid "Tue"
+msgstr "Tis"
+
+#: lang.cpp:174
+msgid "Wed"
+msgstr "Ons"
+
+#: lang.cpp:174
+msgid "Thu"
+msgstr "Tor"
+
+#: lang.cpp:175
+msgid "Fri"
+msgstr "Fre"
+
+#: lang.cpp:175
+msgid "Sat"
+msgstr "Lör"
+
+#: lang.cpp:175
+msgid "Sun"
+msgstr "Sön"
+
+#: net.cpp:31
+msgid "Scanning..."
+msgstr "Söker..."
+
+#, c-format
+#: net.cpp:71 net.cpp:401
+msgid ""
+"Connected to %s\n"
+"IP %s"
+msgstr ""
+"Ansluten till %s\n"
+"IP %s"
+
+#, c-format
+#: net.cpp:73
+msgid "Found %d networks"
+msgstr "Hittade %d nätverk"
+
+#, c-format
+#: net.cpp:101
+msgid "Looking up %s..."
+msgstr "Slår upp %s..."
+
+#, c-format
+#: net.cpp:107
+msgid "Lookup failed (error %d) - try again"
+msgstr "Sökningen misslyckades (fel %d) - försök igen"
+
+#: net.cpp:114
+msgid "Lookup failed (bad response)"
+msgstr "Sökningen misslyckades (felaktigt svar)"
+
+#, c-format
+#: net.cpp:128
+msgid "Not found: %s in %s"
+msgstr "Hittades inte: %s i %s"
+
+#, c-format
+#: net.cpp:129
+msgid "Not found: %s"
+msgstr "Hittades inte: %s"
+
+#, c-format
+#: net.cpp:151 state.cpp:61
+msgid "Location: %s"
+msgstr "Plats: %s"
+
+#: net.cpp:319
+msgid "no answer"
+msgstr "inget svar"
+
+#: net.cpp:320
+msgid "network not found"
+msgstr "nätverket hittades inte"
+
+#: net.cpp:323
+msgid "wrong password or handshake timeout"
+msgstr "fel lösenord eller tidsgräns vid inloggning"
+
+#: net.cpp:326
+msgid "weak signal / timeout"
+msgstr "svag signal / tidsgräns"
+
+#: net.cpp:328
+msgid "router refused the connection"
+msgstr "routern nekade anslutningen"
+
+#, c-format
+#: net.cpp:381
+msgid "Connecting to %s..."
+msgstr "Ansluter till %s..."
+
+#: net.cpp:414
+msgid "Connection lost - reconnecting..."
+msgstr "Anslutningen bröts - ansluter igen..."
+
+#, c-format
+#: net.cpp:419
+msgid "Could not connect: %s (reason %u)"
+msgstr "Kunde inte ansluta: %s (orsak %u)"
+
+#: net.cpp:427
+msgid "Connect to WiFi first"
+msgstr "Anslut till WiFi först"
+
+#: power.cpp:168
+msgid "Battery empty - shutting down"
+msgstr "Batteriet tomt - stänger av"
+
+#, c-format
+#: power.cpp:233
+msgid "Running on battery  -  %d%%  (%.2f V)"
+msgstr "Går på batteri  -  %d%%  (%.2f V)"
+
+#, c-format
+#: sdlog.cpp:180
+msgid "Logging to %s (card %llu MB)"
+msgstr "Loggar till %s (kort %llu MB)"
+
+#: sdlog.cpp:180
+msgid "Card found but cannot write"
+msgstr "Kort hittat men kan inte skriva"
+
+#: sdlog.cpp:183
+msgid "No card found (see the log)"
+msgstr "Inget kort hittat (se loggen)"
+
+#: sdlog.cpp:219
+msgid "No card found (retrying every minute)"
+msgstr "Inget kort hittat (försöker varje minut)"
+
+#: sdlog.cpp:229
+msgid "Card found, but cannot write"
+msgstr "Kort hittat, men kan inte skriva"
+
+#, c-format
+#: sdlog.cpp:234
+msgid "Logging to %s (card %llu MB, %s)"
+msgstr "Loggar till %s (kort %llu MB, %s)"
+
+#: sdlog.cpp:235
+msgid "SPI"
+msgstr "SPI"
+
+#: sdlog.cpp:235
+msgid "SD mode"
+msgstr "SD-läge"
+
+#: sdlog.cpp:255
+msgid "Card not in use"
+msgstr "Kortet används inte"
+
+#, c-format
+#: sdlog.cpp:404
+msgid "%s card, %llu MB used of %llu MB"
+msgstr "%s-kort, %llu MB använt av %llu MB"
+
+#, c-format
+#: sdlog.cpp:422
+msgid "Logging to %s"
+msgstr "Loggar till %s"
+
+#, c-format
+#: sdlog.cpp:422
+msgid "Could not create %s"
+msgstr "Kunde inte skapa %s"
+
+#: state.cpp:62 ui_weather.cpp:22 ui_weather.cpp:140 web_page.h:210
+msgid "No location set"
+msgstr "Ingen plats vald"
+
+#: state.cpp:149
+msgid "Clear sky"
+msgstr "Klart"
+
+#: state.cpp:150
+msgid "Mainly clear"
+msgstr "Mestadels klart"
+
+#: state.cpp:151
+msgid "Partly cloudy"
+msgstr "Halvklart"
+
+#: state.cpp:152
+msgid "Overcast"
+msgstr "Mulet"
+
+#: state.cpp:153
+msgid "Fog"
+msgstr "Dimma"
+
+#: state.cpp:154
+msgid "Drizzle"
+msgstr "Duggregn"
+
+#: state.cpp:155
+msgid "Freezing drizzle"
+msgstr "Underkylt duggregn"
+
+#: state.cpp:156
+msgid "Light rain"
+msgstr "Lätt regn"
+
+#: state.cpp:157
+msgid "Rain"
+msgstr "Regn"
+
+#: state.cpp:158
+msgid "Heavy rain"
+msgstr "Kraftigt regn"
+
+#: state.cpp:159
+msgid "Freezing rain"
+msgstr "Underkylt regn"
+
+#: state.cpp:160
+msgid "Light snow"
+msgstr "Lätt snöfall"
+
+#: state.cpp:161
+msgid "Snow"
+msgstr "Snöfall"
+
+#: state.cpp:162
+msgid "Heavy snow"
+msgstr "Kraftigt snöfall"
+
+#: state.cpp:163
+msgid "Snow grains"
+msgstr "Kornsnö"
+
+#: state.cpp:164
+msgid "Showers"
+msgstr "Regnskurar"
+
+#: state.cpp:165
+msgid "Snow showers"
+msgstr "Snöbyar"
+
+#: state.cpp:166
+msgid "Thunderstorm"
+msgstr "Åska"
+
+#: state.cpp:167
+msgid "Thunder + hail"
+msgstr "Åska och hagel"
+
+#: state.cpp:168 victron.cpp:66
+msgid "Unknown"
+msgstr "Okänt"
+
+#: ui_common.cpp:281
+msgid "starting..."
+msgstr "startar..."
+
+#: ui_common.cpp:321 ui_settings.cpp:850
+msgid "Power"
+msgstr "Energi"
+
+#: ui_common.cpp:322
+msgid "Ruuvi"
+msgstr "Ruuvi"
+
+#: ui_common.cpp:323 web_page.h:191 web_page.h:209 web_page.h:210
+msgid "Weather"
+msgstr "Väder"
+
+#: ui_history.cpp:24 web_page.h:156
+msgid "now"
+msgstr "nu"
+
+#: ui_history.cpp:50
+msgid "Last 7 days"
+msgstr "Senaste 7 dagarna"
+
+#: ui_history.cpp:50 web_page.h:146 web_page.h:197
+msgid "Last 24 hours"
+msgstr "Senaste 24 timmarna"
+
+#: ui_history.cpp:51
+msgid "(kWh per day)"
+msgstr "(kWh per dag)"
+
+#: ui_history.cpp:51
+msgid "(Wh per hour)"
+msgstr "(Wh per timme)"
+
+#, c-format
+#: ui_history.cpp:53 ui_history.cpp:55
+msgid "%.2f kWh"
+msgstr "%.2f kWh"
+
+#: ui_history.cpp:104
+msgid "Back"
+msgstr "Tillbaka"
+
+#: ui_history.cpp:106
+msgid "24 hours"
+msgstr "24 timmar"
+
+#: ui_history.cpp:107
+msgid "7 days"
+msgstr "7 dagar"
+
+#: ui_history.cpp:146 ui_home.cpp:265 ui_home.cpp:271 web_page.h:157
+#: web_page.h:186 web_page.h:199
+msgid "Solar"
+msgstr "Sol"
+
+#: ui_history.cpp:148 web_page.h:157 web_page.h:199
+msgid "Consumption"
+msgstr "Förbrukning"
+
+#: ui_history.cpp:150
+msgid "Battery now"
+msgstr "Batteri nu"
+
+#: ui_home.cpp:231 ui_home.cpp:272
+msgid "No data"
+msgstr "Ingen data"
+
+#: ui_home.cpp:247
+msgid "Time To Go"
+msgstr "Tid kvar"
+
+#: ui_home.cpp:256 ui_power.cpp:408 web_page.h:179 web_page.h:214
+msgid "Charging"
+msgstr "Laddar"
+
+#, c-format
+#: ui_home.cpp:266 ui_power.cpp:341
+msgid "Today %.2f kWh"
+msgstr "Idag %.2f kWh"
+
+#: ui_power.cpp:151
+msgid "PV charger"
+msgstr "Solladdare"
+
+#: ui_power.cpp:152 victron.cpp:33
+msgid "DC-DC"
+msgstr "DC-DC"
+
+#: ui_power.cpp:153
+msgid "Shore charger"
+msgstr "Landström"
+
+#: ui_power.cpp:154 victron.cpp:32 web_page.h:214
+msgid "Inverter"
+msgstr "Växelriktare"
+
+#: ui_power.cpp:155 ui_power.cpp:423 web_page.h:181 web_page.h:182
+#: web_page.h:199
+msgid "Battery"
+msgstr "Batteri"
+
+#: ui_power.cpp:156
+msgid "DC loads"
+msgstr "DC-förbrukare"
+
+#: ui_power.cpp:179
+msgid "History"
+msgstr "Historik"
+
+#: ui_power.cpp:189
+msgid ""
+"No Victron devices yet.\n"
+"Add them under Settings."
+msgstr ""
+"Inga Victron-enheter än.\n"
+"Lägg till dem under Inställningar."
+
+#: ui_power.cpp:332
+msgid "PV chargers"
+msgstr "Solladdare"
+
+#, c-format
+#: ui_power.cpp:338
+msgid "%d chargers"
+msgstr "%d laddare"
+
+#, c-format
+#: ui_power.cpp:374
+msgid "In %.2f V"
+msgstr "In %.2f V"
+
+#, c-format
+#: ui_power.cpp:405
+msgid "%dh %02dm left"
+msgstr "%dh %02dm kvar"
+
+#: ui_power.cpp:433
+msgid "No battery monitor"
+msgstr "Ingen batterimonitor"
+
+#, c-format
+#: ui_power.cpp:445
+msgid "%.0f VA"
+msgstr "%.0f VA"
+
+#: ui_power.cpp:454
+msgid "ECO (search)"
+msgstr "ECO (söker)"
+
+#: ui_power.cpp:481
+msgid "Calc. excl. DC-DC, incl. inv."
+msgstr "Beräknat, utan DC-DC, med växelr."
+
+#: ui_power.cpp:482
+msgid "Calculated, excl. DC-DC"
+msgstr "Beräknat, utan DC-DC"
+
+#: ui_power.cpp:483
+msgid "Calculated, incl. inverter"
+msgstr "Beräknat, med växelriktare"
+
+#: ui_power.cpp:484
+msgid "Calculated"
+msgstr "Beräknat"
+
+#: ui_settings.cpp:28
+msgid "Scan and choose a network first"
+msgstr "Sök och välj ett nätverk först"
+
+#: ui_settings.cpp:57
+msgid "Web server switched off. Nothing is served, and about 12 kB of memory is freed."
+msgstr "Webbservern är avstängd. Inget visas, och ungefär 12 kB minne frigörs."
+
+#, c-format
+#: ui_settings.cpp:62
+msgid ""
+"\"%s\" at http://%s.local/ on the same WiFi.\n"
+"%s"
+msgstr ""
+"\"%s\" på http://%s.local/ i samma WiFi.\n"
+"%s"
+
+#: ui_settings.cpp:63
+msgid "Password required."
+msgstr "Lösenord krävs."
+
+#: ui_settings.cpp:63
+msgid "No password: anyone on the WiFi can view the page."
+msgstr "Inget lösenord: alla i nätverket kan se sidan."
+
+#, c-format
+#: ui_settings.cpp:116
+msgid "Ruuvi %s  (%s)"
+msgstr "Ruuvi %s  (%s)"
+
+#, c-format
+#: ui_settings.cpp:118 ui_settings.cpp:174
+msgid "Ruuvi %s"
+msgstr "Ruuvi %s"
+
+#: ui_settings.cpp:148
+msgid "No tags added yet"
+msgstr "Inga givare tillagda än"
+
+#, c-format
+#: ui_settings.cpp:164
+msgid "Max %d tags. Delete one first."
+msgstr "Max %d givare. Ta bort en först."
+
+#, c-format
+#: ui_settings.cpp:206
+msgid "Max %d tags. Tap one above and delete it first."
+msgstr "Max %d givare. Tryck på en ovan och ta bort den först."
+
+#, c-format
+#: ui_settings.cpp:231
+msgid ""
+"%s\n"
+"Ruuvi %s  -  %.1f°C"
+msgstr ""
+"%s\n"
+"Ruuvi %s  -  %.1f°C"
+
+#, c-format
+#: ui_settings.cpp:233
+msgid ""
+"%s\n"
+"Ruuvi %s  -  not heard"
+msgstr ""
+"%s\n"
+"Ruuvi %s  -  inte hörd"
+
+#, c-format
+#: ui_settings.cpp:251
+msgid "%sRuuvi %s   %.1f°"
+msgstr "%sRuuvi %s   %.1f°"
+
+#, c-format
+#: ui_settings.cpp:252
+msgid "%sRuuvi %s"
+msgstr "%sRuuvi %s"
+
+#: ui_settings.cpp:259 ui_settings.cpp:728 ui_victron_settings.cpp:169 ui_victron_settings.cpp:248
+msgid "Searching..."
+msgstr "Söker..."
+
+#, c-format
+#: ui_settings.cpp:269
+msgid "Brightness: %d%%"
+msgstr "Ljusstyrka: %d%%"
+
+#: ui_settings.cpp:270
+msgid "Screen saver brightness: off"
+msgstr "Ljusstyrka i skärmsläckaren: av"
+
+#, c-format
+#: ui_settings.cpp:271
+msgid "Screen saver brightness: %d%%"
+msgstr "Ljusstyrka i skärmsläckaren: %d%%"
+
+#, c-format
+#: ui_settings.cpp:302
+msgid "Update sensors: every %d s"
+msgstr "Uppdatera givare: var %d s"
+
+#, c-format
+#: ui_settings.cpp:304
+msgid "Update sensors: every %d min"
+msgstr "Uppdatera givare: var %d min"
+
+#: ui_settings.cpp:329
+msgid "CABBY"
+msgstr "CABBY"
+
+#: ui_settings.cpp:359
+msgid "Onboard battery: tap Check battery"
+msgstr "Kortets batteri: tryck på Kontrollera batteri"
+
+#: ui_settings.cpp:363
+msgid "Onboard battery: none connected (running on external power)"
+msgstr "Kortets batteri: inget anslutet (går på extern ström)"
+
+#, c-format
+#: ui_settings.cpp:366
+msgid ""
+"Onboard battery: %d%%  (%d.%02d V)%s\n"
+"%s"
+msgstr ""
+"Kortets batteri: %d%%  (%d.%02d V)%s\n"
+"%s"
+
+#: ui_settings.cpp:367
+msgid "charging"
+msgstr "laddar"
+
+#: ui_settings.cpp:368
+msgid "SW6106 found: light-load shutdown disabled"
+msgstr "SW6106 hittad: avstängning vid låg last avslagen"
+
+#: ui_settings.cpp:369
+msgid "No SW6106 on this board"
+msgstr "Ingen SW6106 på det här kortet"
+
+#, c-format
+#: ui_settings.cpp:381
+msgid ""
+"On battery: WiFi and Bluetooth off, screen at 10%%, last readings kept.\n"
+"Shuts down at %d%%."
+msgstr ""
+"På batteri: WiFi och Bluetooth av, skärmen på 10%%, senaste värden visas.\n"
+"Stänger av vid %d%%."
+
+#: ui_settings.cpp:382
+msgid "Battery mode off: the board keeps running normally until the cell is flat."
+msgstr "Batteriläge av: kortet går som vanligt tills cellen är tom."
+
+#, c-format
+#: ui_settings.cpp:417
+msgid "Battery: warning below %d%%, alarm below %d%%%s"
+msgstr "Batteri: varning under %d%%, larm under %d%%%s"
+
+#: ui_settings.cpp:418
+msgid "Wind warning off"
+msgstr "Vindvarning av"
+
+#, c-format
+#: ui_settings.cpp:421
+msgid "Wind warning at %d m/s"
+msgstr "Vindvarning vid %d m/s"
+
+#: ui_settings.cpp:470 ui_settings.cpp:752 ui_victron_settings.cpp:199
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: ui_settings.cpp:470
+msgid "Yes"
+msgstr "Ja"
+
+#: ui_settings.cpp:535 ui_settings.cpp:950
+msgid "Restart"
+msgstr "Starta om"
+
+#: ui_settings.cpp:535
+msgid "Restart the board now?"
+msgstr "Starta om kortet nu?"
+
+#: ui_settings.cpp:539 ui_settings.cpp:951
+msgid "Shut down"
+msgstr "Stäng av"
+
+#: ui_settings.cpp:539
+msgid ""
+"Switch the display off?\n"
+"\n"
+"The board goes to sleep and only the reset button (or cutting the power) starts it again."
+msgstr ""
+"Stänga av skärmen?\n"
+"\n"
+"Kortet går i viloläge och startar bara igen med reset-knappen (eller om strömmen bryts)."
+
+#: ui_settings.cpp:543 ui_settings.cpp:952
+msgid "Full reset"
+msgstr "Fabriksåterställning"
+
+#: ui_settings.cpp:544
+msgid ""
+"Erase every setting?\n"
+"\n"
+"WiFi, weather location, RuuviTags, Victron devices and keys and the web password are all lost. The board restarts afterwards."
+msgstr ""
+"Radera alla inställningar?\n"
+"\n"
+"WiFi, väderplats, RuuviTags, Victron-enheter och nycklar och webblösenordet försvinner. Kortet startar om efteråt."
+
+#, c-format
+#: ui_settings.cpp:553
+msgid ""
+"%s\n"
+"%s, %u kB"
+msgstr ""
+"%s\n"
+"%s, %u kB"
+
+#: ui_settings.cpp:556
+msgid "Insert a card and tap Mount."
+msgstr "Sätt i ett kort och tryck på Montera."
+
+#: ui_settings.cpp:556
+msgid "The log is kept in memory and readable at /log."
+msgstr "Loggen hålls i minnet och kan läsas på /log."
+
+#: ui_settings.cpp:561
+msgid "Already mounted"
+msgstr "Redan monterat"
+
+#, c-format
+#: ui_settings.cpp:580
+msgid "Deleted %d old log file(s)"
+msgstr "Tog bort %d gamla loggfiler"
+
+#: ui_settings.cpp:600
+msgid "Measurements are not being logged."
+msgstr "Mätvärden loggas inte."
+
+#: ui_settings.cpp:618
+msgid "Settings saved to /settings.json"
+msgstr "Inställningarna sparade i /settings.json"
+
+#: ui_settings.cpp:618
+msgid "Backup failed - is a card inserted?"
+msgstr "Säkerhetskopian misslyckades - sitter det ett kort i?"
+
+#: ui_settings.cpp:624
+msgid "Settings restored - restarting..."
+msgstr "Inställningarna återställda - startar om..."
+
+#: ui_settings.cpp:629
+msgid "Restore failed - no /settings.json on the card?"
+msgstr "Återställningen misslyckades - saknas /settings.json på kortet?"
+
+#: ui_settings.cpp:661 ui_settings.cpp:680
+msgid "Connect"
+msgstr "Anslut"
+
+#: ui_settings.cpp:662
+msgid "Sensors"
+msgstr "Givare"
+
+#: ui_settings.cpp:663
+msgid "Device"
+msgstr "Enhet"
+
+#: ui_settings.cpp:666
+msgid "WiFi"
+msgstr "WiFi"
+
+#: ui_settings.cpp:672
+msgid "Scan"
+msgstr "Sök"
+
+#: ui_settings.cpp:674 web.cpp:212
+msgid "Password"
+msgstr "Lösenord"
+
+#: ui_settings.cpp:687
+msgid "Web page"
+msgstr "Webbsida"
+
+#: ui_settings.cpp:693
+msgid "Name of the page"
+msgstr "Sidans namn"
+
+#: ui_settings.cpp:698
+msgid "Run the web server"
+msgstr "Kör webbservern"
+
+#: ui_settings.cpp:701
+msgid "Password (empty = no login)"
+msgstr "Lösenord (tomt = ingen inloggning)"
+
+#: ui_settings.cpp:706 ui_settings.cpp:749 ui_victron_settings.cpp:196
+msgid "Save"
+msgstr "Spara"
+
+#: ui_settings.cpp:710
+msgid "Weather location"
+msgstr "Plats för väder"
+
+#: ui_settings.cpp:712
+msgid "City (or City, Country)"
+msgstr "Ort (eller Ort, Land)"
+
+#: ui_settings.cpp:715
+msgid "Set"
+msgstr "Välj"
+
+#: ui_settings.cpp:722
+msgid "Temperature (RuuviTags)"
+msgstr "Temperatur (RuuviTags)"
+
+#: ui_settings.cpp:723
+msgid "Read RuuviTags"
+msgstr "Läs RuuviTags"
+
+#: ui_settings.cpp:729 ui_victron_settings.cpp:170
+msgid "Add"
+msgstr "Lägg till"
+
+#: ui_settings.cpp:745
+msgid "Name, e.g. Inside"
+msgstr "Namn, t.ex. Inne"
+
+#: ui_settings.cpp:750 ui_victron_settings.cpp:197
+msgid "Delete"
+msgstr "Ta bort"
+
+#: ui_settings.cpp:764
+msgid "Language"
+msgstr "Språk"
+
+#: ui_settings.cpp:769
+msgid "Language on the display. The board restarts to change it."
+msgstr "Språk på skärmen. Kortet startar om för att byta."
+
+#: ui_settings.cpp:779 web_page.h:170
+msgid "Display"
+msgstr "Skärm"
+
+#: ui_settings.cpp:787
+msgid "Sensor scan interval"
+msgstr "Avläsningsintervall för givare"
+
+#: ui_settings.cpp:791
+msgid "Scan now"
+msgstr "Sök nu"
+
+#: ui_settings.cpp:797
+msgid "Every 10 s while Settings is open, so new devices show up."
+msgstr "Var 10:e s medan Inställningar är öppet, så att nya enheter syns."
+
+#: ui_settings.cpp:801
+msgid "SD card"
+msgstr "SD-kort"
+
+#: ui_settings.cpp:802
+msgid "Write the log to the card"
+msgstr "Skriv loggen till kortet"
+
+#: ui_settings.cpp:809
+msgid "Mount"
+msgstr "Montera"
+
+#: ui_settings.cpp:810
+msgid "Eject"
+msgstr "Mata ut"
+
+#: ui_settings.cpp:814
+msgid "Probe card"
+msgstr "Testa kortet"
+
+#: ui_settings.cpp:818
+msgid "New log"
+msgstr "Ny logg"
+
+#: ui_settings.cpp:819
+msgid "Delete old logs"
+msgstr "Ta bort gamla loggar"
+
+#: ui_settings.cpp:823
+msgid "Log measurements to /data.csv"
+msgstr "Logga mätvärden till /data.csv"
+
+#: ui_settings.cpp:825
+msgid "Every"
+msgstr "Var"
+
+#: ui_settings.cpp:827
+msgid ""
+"1 min\n"
+"5 min\n"
+"15 min\n"
+"60 min"
+msgstr ""
+"1 min\n"
+"5 min\n"
+"15 min\n"
+"60 min"
+
+#: ui_settings.cpp:840
+msgid "Back up settings"
+msgstr "Säkerhetskopiera"
+
+#: ui_settings.cpp:841
+msgid "Restore"
+msgstr "Återställ"
+
+#: ui_settings.cpp:846
+msgid "Eject before pulling the card out. Files can be downloaded from the web page under /files. The backup contains WiFi and Victron keys, so keep the card safe. Restoring restarts the board."
+msgstr "Mata ut innan kortet tas ur. Filerna kan laddas ner från webbsidan under /files. Säkerhetskopian innehåller WiFi- och Victron-nycklar, så förvara kortet säkert. Återställning startar om kortet."
+
+#: ui_settings.cpp:856
+msgid "Check battery"
+msgstr "Kontrollera batteri"
+
+#: ui_settings.cpp:858
+msgid "Keep running on the battery when power is lost"
+msgstr "Fortsätt på batteriet när strömmen försvinner"
+
+#: ui_settings.cpp:862
+msgid "Shut down at"
+msgstr "Stäng av vid"
+
+#: ui_settings.cpp:868
+msgid "The CPU always runs at full speed (slowing it froze the display). WiFi modem sleep is used only while the web server is off. Tabs that are not on screen are not redrawn."
+msgstr "Processorn går alltid på full fart (att sakta ner den frös skärmen). WiFi-modemets viloläge används bara när webbservern är avstängd. Flikar som inte visas ritas inte om."
+
+#: ui_settings.cpp:871
+msgid "Starting screen"
+msgstr "Startskärm"
+
+#: ui_settings.cpp:875
+msgid "Shown while the board starts. Set the time to 0 to skip it."
+msgstr "Visas medan kortet startar. Sätt tiden till 0 för att hoppa över den."
+
+#: ui_settings.cpp:878
+msgid "Text"
+msgstr "Text"
+
+#: ui_settings.cpp:893
+msgid "Red"
+msgstr "Röd"
+
+#: ui_settings.cpp:895
+msgid "Green"
+msgstr "Grön"
+
+#: ui_settings.cpp:897
+msgid "Blue"
+msgstr "Blå"
+
+#: ui_settings.cpp:899
+msgid "Seconds shown"
+msgstr "Sekunder som den visas"
+
+#: ui_settings.cpp:903
+msgid "Alarms"
+msgstr "Larm"
+
+#: ui_settings.cpp:904
+msgid "Show warnings and alarms"
+msgstr "Visa varningar och larm"
+
+#: ui_settings.cpp:905
+msgid "A new alarm wakes the screen"
+msgstr "Ett nytt larm väcker skärmen"
+
+#: ui_settings.cpp:906
+msgid "Warn when the SD card is missing"
+msgstr "Varna när SD-kortet saknas"
+
+#: ui_settings.cpp:910
+msgid "Temperatures are never alarmed on: the caravan may be left unheated and a tag can sit outside or in a fridge."
+msgstr "Temperaturer larmar aldrig: husvagnen kan stå ouppvärmd och en givare kan sitta ute eller i ett kylskåp."
+
+#: ui_settings.cpp:916
+msgid "Battery warning %"
+msgstr "Batterivarning %"
+
+#: ui_settings.cpp:918
+msgid "Battery alarm %"
+msgstr "Batterilarm %"
+
+#: ui_settings.cpp:920
+msgid "Wind warning m/s (0 = off)"
+msgstr "Vindvarning m/s (0 = av)"
+
+#: ui_settings.cpp:925
+msgid "Debug"
+msgstr "Felsökning"
+
+#: ui_settings.cpp:926
+msgid "Serial monitor: log everything to USB serial"
+msgstr "Seriell monitor: logga allt till USB-serieporten"
+
+#: ui_settings.cpp:927
+msgid "Log memory, CPU and battery"
+msgstr "Logga minne, processor och batteri"
+
+#: ui_settings.cpp:931
+msgid "Off: only faults (errors and warnings) are written to USB serial. The log on the web page (/log) and on the SD card always gets everything."
+msgstr "Av: bara problem (fel och varningar) skrivs till USB-serieporten. Loggen på webbsidan (/log) och på SD-kortet får alltid allt."
+
+#: ui_settings.cpp:935 web_page.h:225
+msgid "About"
+msgstr "Om"
+
+#: ui_settings.cpp:948
+msgid "System"
+msgstr "System"
+
+#: ui_settings.cpp:958
+msgid "Each asks for confirmation first. Back up your settings to the card before a full reset."
+msgstr "Var och en frågar först. Säkerhetskopiera inställningarna till kortet före en fabriksåterställning."
+
+#: ui_temp.cpp:137 ui_temp.cpp:266
+msgid ""
+"No RuuviTags added yet.\n"
+"Add up to 3 under Settings."
+msgstr ""
+"Inga RuuviTags tillagda än.\n"
+"Lägg till upp till 3 under Inställningar."
+
+#: ui_temp.cpp:219
+msgid ""
+"Temperature reading is switched off.\n"
+"Switch it on under Settings."
+msgstr ""
+"Temperaturavläsning är avstängd.\n"
+"Slå på den under Inställningar."
+
+#: ui_temp.cpp:241
+msgid "Waiting for data..."
+msgstr "Väntar på data..."
+
+#, c-format
+#: ui_temp.cpp:251
+msgid "%.0f hPa"
+msgstr "%.0f hPa"
+
+#, c-format
+#: ui_temp.cpp:258
+msgid "%lu s ago"
+msgstr "för %lu s sedan"
+
+#, c-format
+#: ui_temp.cpp:259
+msgid "No data for %lu min"
+msgstr "Ingen data på %lu min"
+
+#: ui_victron_settings.cpp:39
+msgid "Note: this device type can't be shown on the Power tab yet."
+msgstr "Obs: den här enhetstypen kan inte visas på fliken Energi än."
+
+#: ui_victron_settings.cpp:73
+msgid "No devices added yet"
+msgstr "Inga enheter tillagda än"
+
+#: ui_victron_settings.cpp:97
+msgid "The key must be 32 characters (0-9, A-F)."
+msgstr "Nyckeln ska vara 32 tecken (0-9, A-F)."
+
+#, c-format
+#: ui_victron_settings.cpp:125
+msgid "Max %d devices. Delete one first."
+msgstr "Max %d enheter. Ta bort en först."
+
+#: ui_victron_settings.cpp:160
+msgid "Victron devices"
+msgstr "Victron-enheter"
+
+#: ui_victron_settings.cpp:164
+msgid "In VictronConnect: enable Instant readout, then copy the key from Product info > Encryption data."
+msgstr "I VictronConnect: slå på Instant readout och kopiera sedan nyckeln från Product info > Encryption data."
+
+#: ui_victron_settings.cpp:187
+msgid "Name"
+msgstr "Namn"
+
+#: ui_victron_settings.cpp:190
+msgid "Encryption key (32 characters)"
+msgstr "Krypteringsnyckel (32 tecken)"
+
+#, c-format
+#: ui_victron_settings.cpp:218
+msgid ""
+"%s\n"
+"%s  -  OK (%d dBm)"
+msgstr ""
+"%s\n"
+"%s  -  OK (%d dBm)"
+
+#: ui_weather.cpp:31
+msgid "Loading weather..."
+msgstr "Hämtar väder..."
+
+#: ui_weather.cpp:31
+msgid ""
+"Set a location\n"
+"in Settings"
+msgstr ""
+"Välj en plats\n"
+"i Inställningar"
+
+#: ui_weather.cpp:63
+msgid "Refresh"
+msgstr "Uppdatera"
+
+#: ui_weather.cpp:66
+msgid "Updating weather..."
+msgstr "Hämtar väder..."
+
+#, c-format
+#: ui_weather.cpp:81
+msgid "Feels %.1f°   Humidity %d%%   Wind %.1f m/s"
+msgstr "Känns som %.1f°   Fukt %d%%   Vind %.1f m/s"
+
+#: ui_weather.cpp:95
+msgid "Updated %H:%M"
+msgstr "Uppdaterad %H:%M"
+
+#: ui_weather.cpp:104
+msgid "Waiting for time sync"
+msgstr "Väntar på tidssynkronisering"
+
+#: ui_weather.cpp:115
+msgid "(UTC)"
+msgstr "(UTC)"
+
+#: victron.cpp:30
+msgid "Solar charger"
+msgstr "Solladdare"
+
+#: victron.cpp:31
+msgid "Battery monitor"
+msgstr "Batterimonitor"
+
+#: victron.cpp:34
+msgid "Smart Lithium"
+msgstr "Smart Lithium"
+
+#: victron.cpp:35
+msgid "Inverter RS"
+msgstr "Inverter RS"
+
+#: victron.cpp:36
+msgid "AC charger"
+msgstr "AC-laddare"
+
+#: victron.cpp:37
+msgid "Battery protect"
+msgstr "Battery Protect"
+
+#: victron.cpp:38
+msgid "Lynx BMS"
+msgstr "Lynx BMS"
+
+#: victron.cpp:39
+msgid "VE.Bus"
+msgstr "VE.Bus"
+
+#: victron.cpp:40
+msgid "DC energy meter"
+msgstr "DC-energimätare"
+
+#: victron.cpp:41
+msgid "Victron device"
+msgstr "Victron-enhet"
+
+#: victron.cpp:51
+msgid "Off"
+msgstr "Av"
+
+#: victron.cpp:52
+msgid "Low power"
+msgstr "Lågeffekt"
+
+#: victron.cpp:53
+msgid "Fault"
+msgstr "Fel"
+
+#: victron.cpp:54
+msgid "Bulk"
+msgstr "Bulk"
+
+#: victron.cpp:55
+msgid "Absorption"
+msgstr "Absorption"
+
+#: victron.cpp:56
+msgid "Float"
+msgstr "Float"
+
+#: victron.cpp:57
+msgid "Storage"
+msgstr "Förvaring"
+
+#: victron.cpp:58
+msgid "Equalize"
+msgstr "Utjämning"
+
+#: victron.cpp:59
+msgid "Inverting"
+msgstr "Växelriktar"
+
+#: victron.cpp:60
+msgid "Power supply"
+msgstr "Strömförsörjning"
+
+#: victron.cpp:61
+msgid "Starting up"
+msgstr "Startar"
+
+#: victron.cpp:62
+msgid "Rep. absorption"
+msgstr "Upprepad absorption"
+
+#: victron.cpp:63
+msgid "Recondition"
+msgstr "Rekonditionering"
+
+#: victron.cpp:64
+msgid "BatterySafe"
+msgstr "BatterySafe"
+
+#: victron.cpp:65
+msgid "Ext. control"
+msgstr "Extern styrning"
+
+#: victron.cpp:75
+msgid "Short circuit"
+msgstr "Kortslutning"
+
+#: victron.cpp:76
+msgid "Overload"
+msgstr "Överlast"
+
+#: victron.cpp:77
+msgid "Low battery"
+msgstr "Lågt batteri"
+
+#: victron.cpp:78
+msgid "High battery"
+msgstr "Högt batteri"
+
+#: victron.cpp:79
+msgid "High temp"
+msgstr "Hög temp"
+
+#: victron.cpp:80
+msgid "Low temp"
+msgstr "Låg temp"
+
+#: victron.cpp:81
+msgid "DC ripple"
+msgstr "DC-rippel"
+
+#: victron.cpp:82
+msgid "Low AC volt."
+msgstr "Låg AC-spänning"
+
+#: victron.cpp:83
+msgid "High AC volt."
+msgstr "Hög AC-spänning"
+
+#: victron.cpp:84
+msgid "Alarm"
+msgstr "Larm"
+
+#: victron.cpp:96
+msgid "Not heard yet"
+msgstr "Inte hörd än"
+
+#: victron.cpp:97
+msgid "No signal"
+msgstr "Ingen signal"
+
+#: victron.cpp:98
+msgid "Wrong key"
+msgstr "Fel nyckel"
+
+#: victron.cpp:99
+msgid "Type not supported"
+msgstr "Typen stöds inte"
+
+#: victron.cpp:100
+msgid "OK"
+msgstr "OK"
+
+#: web.cpp:212
+msgid "Log in"
+msgstr "Logga in"
+
+#: web.cpp:233
+msgid "Too many attempts - wait a moment"
+msgstr "För många försök - vänta en stund"
+
+#: web.cpp:243
+msgid "Wrong password"
+msgstr "Fel lösenord"
+
+#: web.cpp:584
+msgid "(log is empty)"
+msgstr "(loggen är tom)"
+
+#: web.cpp:595
+msgid "No card mounted (Settings -> SD card)"
+msgstr "Inget kort monterat (Inställningar -> SD-kort)"
+
+#: web.cpp:622
+msgid "Files on the card"
+msgstr "Filer på kortet"
+
+#: web.cpp:636
+msgid "back"
+msgstr "tillbaka"
+
+#: web_page.h:133 web_page.h:243
+msgid "Update"
+msgstr "Uppdatera"
+
+#: web_page.h:134
+msgid "No answer, retrying"
+msgstr "Inget svar, försöker igen"
+
+#: web_page.h:134
+msgid "Connecting…"
+msgstr "Ansluter…"
+
+#, c-format
+#: web_page.h:136
+msgid "Offline · data %s old"
+msgstr "Offline · data %s gammal"
+
+#: web_page.h:137
+msgid "Connected"
+msgstr "Ansluten"
+
+#: web_page.h:157
+msgid "Battery (%)"
+msgstr "Batteri (%)"
+
+#, c-format
+#: web_page.h:157
+msgid "Max %s Wh per hour"
+msgstr "Max %s Wh per timme"
+
+#, c-format
+#: web_page.h:180
+msgid "%s left"
+msgstr "%s kvar"
+
+#: web_page.h:182
+msgid "No battery data"
+msgstr "Ingen batteridata"
+
+#, c-format
+#: web_page.h:186
+msgid "today %s kWh"
+msgstr "idag %s kWh"
+
+#: web_page.h:192
+msgid "Temperatures"
+msgstr "Temperaturer"
+
+#: web_page.h:201
+msgid "Last 10 minutes"
+msgstr "Senaste 10 minuterna"
+
+#, c-format
+#: web_page.h:207
+msgid "H %s° · L %s°"
+msgstr "Max %s° · Min %s°"
+
+#, c-format
+#: web_page.h:207
+msgid "Feels %s°"
+msgstr "Känns som %s°"
+
+#, c-format
+#: web_page.h:207
+msgid "humidity %s"
+msgstr "luftfuktighet %s"
+
+#, c-format
+#: web_page.h:207
+msgid "wind %s m/s"
+msgstr "vind %s m/s"
+
+#: web_page.h:210
+msgid "Loading weather…"
+msgstr "Hämtar väder…"
+
+#: web_page.h:214
+msgid "No Victron devices added"
+msgstr "Inga Victron-enheter tillagda"
+
+#: web_page.h:220
+msgid "Board battery"
+msgstr "Kortets batteri"
+
+#: web_page.h:220
+msgid "charging or full"
+msgstr "laddar eller fullt"
+
+#: web_page.h:220
+msgid "running on battery"
+msgstr "går på batteri"
+
+#: web_page.h:220
+msgid "on external power"
+msgstr "på extern ström"
+
+#: web_page.h:223
+msgid "every 30 s"
+msgstr "var 30:e s"
+
+#: web_page.h:223
+msgid "every 2 minutes"
+msgstr "varannan minut"
+
+#: web_page.h:224
+msgid "log"
+msgstr "logg"
+
+#: web_page.h:224
+msgid "files"
+msgstr "filer"
+
+#: web_page.h:224
+msgid "Log out"
+msgstr "Logga ut"
+
+#: web_page.h:226
+msgid "Updates"
+msgstr "Uppdatering"
+
+#, c-format
+#: web_page.h:226
+msgid "Updated %s"
+msgstr "Uppdaterad %s"
+
+#: web_page.h:226
+msgid "Every 30 s while the page is in use, every 2 minutes after 2 minutes without use. Update fetches at once."
+msgstr "Var 30:e s medan sidan används, varannan minut efter 2 minuter utan användning. Uppdatera hämtar direkt."
+
+#: web_page.h:227
+msgid "Board"
+msgstr "Enhet"
+
+#, c-format
+#: web_page.h:227
+msgid "up %s"
+msgstr "igång %s"
+
+#: web_page.h:228
+msgid "Source"
+msgstr "Källkod"
+
+#: web_page.h:229
+msgid "License"
+msgstr "Licens"
+
+#: web_page.h:229
+msgid "Written with the help of Claude (Anthropic)"
+msgstr "Skriven med hjälp av Claude (Anthropic)"
+
+#, c-format
+#: web_page.h:232
+msgid "%s days"
+msgstr "%s dagar"
+
+#, c-format
+#: web_page.h:241
+msgid "Values from %s, loading…"
+msgstr "Värden från %s, hämtar…"
