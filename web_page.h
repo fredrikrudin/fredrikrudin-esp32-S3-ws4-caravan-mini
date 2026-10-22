@@ -53,6 +53,41 @@ svg.c24{height:170px}svg.sp{height:46px;margin:4px 0}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
 .fc{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
 .fc>div{background:var(--card2);border-radius:10px;padding:8px;text-align:center;font-size:13px}
+/* ---- Power: chargers | battery | AC side, DC loads under the battery, like the display ---- */
+.pw{display:grid;grid-template-columns:minmax(0,1fr) 40px minmax(0,1.25fr) 40px minmax(0,1fr);
+ grid-template-areas:"src l1 bat l2 ac" ". . v . ." ". . loads . .";--c-solar:#f39c12;--c-dcdc:#16a085;--c-ac:#4a5a6a;--c-inv:#8e5bd0;--c-batt:#2f86d1;--c-loads:#27ae60}
+.pw .col{display:flex;flex-direction:column;gap:12px;justify-content:center;min-width:0}
+.pw .src{grid-area:src}.pw .ac{grid-area:ac}.pw .bat{grid-area:bat}.pw .loads{grid-area:loads}.pw .v{grid-area:v;height:26px}
+.pw .l1{grid-area:l1}.pw .l2{grid-area:l2}.pw .l1,.pw .l2{display:flex;flex-direction:column}
+.pw .links{flex:1;display:flex;flex-direction:column;gap:12px}.pw .links>div{flex:1;display:flex;align-items:center}
+.pw .l1>.vln{display:none}
+.box{border-radius:12px;overflow:hidden;background:var(--dev);color:#fff;position:relative;min-width:0}
+.box .t{background:rgba(0,0,0,.22);padding:5px 10px;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.box .b{padding:6px 10px 10px;text-align:center;position:relative;z-index:1}
+.box .val{font-size:32px;font-weight:600;line-height:1.1;font-variant-numeric:tabular-nums}
+.box .st{font-size:14px}.box .d{font-size:12.5px;opacity:.8;font-variant-numeric:tabular-nums;min-height:1em}
+.box.idle{--dev:#2a3139!important;color:var(--dim)}.box.alm{--dev:#b03a2e!important}
+.bat .box{flex:1;display:flex;flex-direction:column}.bat .box .b{flex:1;display:flex;flex-direction:column;justify-content:center}
+.bat .box .val{font-size:52px}
+.box .soc{height:8px;margin:6px 4px 8px;border-radius:4px;background:rgba(0,0,0,.25);overflow:hidden}
+.box .soc i{display:block;height:100%;background:#fff;opacity:.85}
+.box .two{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;font-size:14px;font-variant-numeric:tabular-nums}
+.box svg.bg{position:absolute;left:0;bottom:0;width:100%;height:26%;opacity:.22;pointer-events:none}
+.ln{width:100%;height:6px;border-radius:3px;background:var(--line)}
+.vln{width:6px;height:100%;margin:0 auto;border-radius:3px;background:var(--line)}
+.ln.on{background:repeating-linear-gradient(90deg,var(--dev) 0 12px,transparent 12px 20px),color-mix(in srgb,var(--dev) 35%,transparent);background-size:20px 100%,100% 100%;animation:fx 1s linear infinite}
+.ln.rev{animation-direction:reverse}
+.vln.on{background:repeating-linear-gradient(180deg,var(--dev) 0 12px,transparent 12px 20px),color-mix(in srgb,var(--dev) 35%,transparent);background-size:100% 20px,100% 100%;animation:fy 1s linear infinite}
+@keyframes fx{to{background-position:20px 0,0 0}}@keyframes fy{to{background-position:0 20px,0 0}}
+@media (prefers-reduced-motion:reduce){.ln.on,.vln.on{animation:none}}
+@media (max-width:640px){
+ .pw{grid-template-columns:minmax(0,1fr);grid-template-areas:"src" "ac" "l1" "bat" "v" "loads";row-gap:10px}
+ .pw .src,.pw .ac{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+ .pw .l2,.pw .l1 .links{display:none}.pw .l1{height:26px}.pw .l1>.vln{display:block}.pw .v{height:16px}
+ .box .val{font-size:26px}.bat .box .val{font-size:46px}}
+/* Weather and temperatures side by side in one card */
+.wt{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:14px 28px}
+@media (max-width:700px){.wt{grid-template-columns:minmax(0,1fr)}}
 footer{max-width:1240px;margin:0 auto;padding:0 16px 28px}
 /* the About card: like the others, but quieter */
 .about{border:1px solid var(--line);border-radius:14px;padding:12px 16px;color:var(--dim);font-size:12px;line-height:1.6}
@@ -103,7 +138,7 @@ async function setLang(l,v){
    (dimmed) while the board answers. Nothing breaks if the browser keeps nothing. */
 const keep=(k,v)=>{try{localStorage.setItem("ws4."+k,JSON.stringify(v))}catch(e){}};
 const kept=k=>{try{return JSON.parse(localStorage.getItem("ws4."+k))}catch(e){return null}};
-let timer=0,busy=false,fails=0,lastOk=0,pvMax=400,data=null;
+let timer=0,busy=false,fails=0,lastOk=0,data=null;
 
 function schedule(ms){clearTimeout(timer);timer=setTimeout(load,ms)}
 /* Every 30 s, and every 2 minutes once the page has been left alone for 2 minutes:
@@ -165,6 +200,53 @@ function spark(v,color,label,unit){
   const pl=pts.map(p=>`${(p[0]/n*(W-4)+2).toFixed(1)},${(H-4-(p[1]-mn)/(mx-mn)*(H-8)).toFixed(1)}`).join(" ");
   return `<div class="tile"><div class="sub">${label}</div><svg class="sp" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><polyline points="${pl}" fill="none" stroke="${color}" stroke-width="2" vector-effect="non-scaling-stroke"/></svg><div class="sub">${Math.round(mn)}–${Math.round(mx)} ${unit}</div></div>`;
 }
+/* ---- Power: the display's Power tab. Chargers on the left, the AC side on the
+   right, DC loads under the battery; a line lights up and moves while energy flows ---- */
+const PCOL={solar:"var(--c-solar)",dcdc:"var(--c-dcdc)",ac:"var(--c-ac)",inv:"var(--c-inv)"};
+function bgSpark(v){
+  const p=(v||[]).map((y,i)=>[i,y]).filter(q=>q[1]!=null);if(p.length<2)return"";
+  let mn=Math.min(...p.map(q=>q[1])),mx=Math.max(...p.map(q=>q[1]));if(mx-mn<1)mx=mn+1;const n=v.length-1;
+  return `<svg class="bg" viewBox="0 0 100 30" preserveAspectRatio="none"><polyline fill="none" stroke="#fff" stroke-width="2" vector-effect="non-scaling-stroke" points="${p.map(q=>`${(q[0]/n*100).toFixed(1)},${(28-(q[1]-mn)/(mx-mn)*26).toFixed(1)}`).join(" ")}"/></svg>`;
+}
+function pBox(v,sp){
+  let val="--",det="";
+  if(v.ok){
+    if(v.kind=="dcdc"){val=v.out_v!=null?num(v.out_v,2)+" V":"--";if(v.in_v!=null)det=T("In %s V",num(v.in_v,2))}
+    else if(v.kind=="inv"){val=v.power!=null?num(v.power,0)+" VA":"--";if(v.ac_v!=null)det=num(v.ac_v,0)+" V"+(v.ac_i!=null?"  "+num(v.ac_i,1)+" A":"")}
+    else{val=v.power!=null?num(v.power,0)+" W":"--";
+      if(v.kind=="solar"&&v.yield_kwh!=null)det=T("Today %s kWh",num(v.yield_kwh,2));
+      else if(v.kind=="ac"&&v.v!=null)det=num(v.v,2)+" V  "+num(v.a,1)+" A"}
+  }
+  const cls=v.alarm?" alm":v.ok&&v.flow?"":" idle";
+  return `<div class="box${cls}" style="--dev:${PCOL[v.kind]}"><div class="t">${esc(v.name)}</div><div class="b"><div class="val">${val}</div><div class="st">${esc(v.ok?v.state||"":v.status)}</div><div class="d">${esc(det)}</div></div>${v.ok&&v.flow&&sp?bgSpark(sp):""}</div>`;
+}
+const pLine=(v,rev)=>`<div><div class="ln${v.ok&&v.flow?" on":""}${rev?" rev":""}" style="--dev:${PCOL[v.kind]}"></div></div>`;
+function powerCard(d){
+  const vs=(d.victron||[]).filter(v=>v.kind&&v.kind!="other");
+  if(!vs.length)return `<div class="empty">${T("No Victron devices added")}</div>`;
+  const rec=(d.history&&d.history.recent)||{};
+  const left=vs.filter(v=>v.kind=="solar"||v.kind=="dcdc"),right=vs.filter(v=>v.kind=="ac"||v.kind=="inv");
+  const bm=vs.find(v=>v.kind=="batt"),b=d.battery||{};
+  let bat;
+  if(bm&&bm.ok&&b.soc!=null){
+    const extra=b.current!=null&&b.current>0.05?T("Charging"):b.ttg_min!=null&&b.ttg_min>=0&&b.current<-0.05?T("%s left",Math.floor(b.ttg_min/60)+"h "+String(b.ttg_min%60).padStart(2,"0")+"m"):"";
+    bat=`<div class="val">${num(b.soc,0)}%</div><div class="soc"><i style="width:${Math.max(0,Math.min(100,b.soc))}%${b.soc<20?";background:#ff8a7a":""}"></i></div>
+<div class="two"><span>${num(b.voltage,2)} V</span><span>${b.current>0?"+":""}${num(b.current,1)} A</span></div>
+<div class="two d"><span>${b.power>0?"+":""}${num(b.power,0)} W</span>${extra?`<span>${extra}</span>`:""}${bm.temp!=null?`<span>${num(bm.temp,0)}°C</span>`:""}</div>`;
+  }else if(bm){bat=`<div class="val">--</div><div class="st">${esc(bm.status)}</div>`}
+  else{const src=vs.find(v=>v.ok&&v.v!=null);bat=`<div class="val">--</div><div class="st">${src?num(src.v,2)+" V":""}</div><div class="d">${T("No battery monitor")}</div>`}
+  const anyIn=left.concat(right.filter(v=>v.kind=="ac")).some(v=>v.ok&&v.flow);
+  const L=d.loads;
+  return `<div class="pw">
+<div class="col src">${left.map((v,i)=>pBox(v,v.kind=="solar"&&i==0?rec.solar:null)).join("")}</div>
+<div class="l1"><div class="links">${left.map(v=>pLine(v)).join("")}</div><div class="vln${anyIn?" on":""}" style="--dev:var(--c-solar)"></div></div>
+<div class="col bat"><div class="box${bm&&bm.ok?"":" idle"}" style="--dev:var(--c-batt)"><div class="t">${esc(bm?bm.name:T("Battery"))}</div><div class="b">${bat}</div></div></div>
+<div class="l2"><div class="links">${right.map(v=>pLine(v,v.kind=="ac")).join("")}</div></div>
+<div class="col ac">${right.map(v=>pBox(v)).join("")}</div>
+${L?`<div class="v"><div class="vln${L.power>2?" on":""}" style="--dev:var(--c-loads)"></div></div>
+<div class="col loads"><div class="box" style="--dev:var(--c-loads)"><div class="t">${T("DC loads")}</div><div class="b"><div class="val">${num(L.power,0)} W</div><div class="d">${esc(L.note)}</div></div>${bgSpark(rec.load)}</div></div>`:""}
+</div>`;
+}
 /* ---- the page ---- */
 function render(d){
   document.title=d.name||T("Display");$("name").textContent=d.name||"";
@@ -172,24 +254,18 @@ function render(d){
   $("alarms").innerHTML=(d.alarms||[]).map(a=>`<div class="alarm lvl${a.level}">⚠ ${esc(a.text)}</div>`).join("");
   const c=[];
 
-  /* battery and solar */
-  const bat=d.battery||{};
-  if(bat.soc!=null){
-    const low=bat.soc<20,col=low?"linear-gradient(90deg,#6e1e16,#e74c3c)":"linear-gradient(90deg,#0b4a7a,#38a9f5)";
-    let b=`<div class="flex"><span class="big">${num(bat.soc,0)}%</span>${bat.charging?`<span class="chg">⚡ ${T("Charging")}</span>`:""}</div><div class="bar"><i style="width:${Math.max(0,Math.min(100,bat.soc))}%;background:${col}"></i></div>`;
-    b+=`<div class="sub">${num(bat.voltage,2)} V${bat.current!=null?" · "+(bat.current>0?"+":"")+num(bat.current,1)+" A":""}${bat.power!=null?" · "+(bat.power>0?"+":"")+num(bat.power,0)+" W":""}${bat.ttg_min!=null&&bat.ttg_min>=0&&bat.power<0?" · "+T("%s left",Math.floor(bat.ttg_min/60)+"h "+String(bat.ttg_min%60).padStart(2,"0")+"m"):""}</div>`;
-    c.push(card(T("Battery"),b));
-  }else c.push(card(T("Battery"),`<div class="empty">${T("No battery data")}</div>`));
-  const so=d.solar;
-  if(so&&so.power!=null){
-    pvMax=Math.max(pvMax,so.power);
-    c.push(card(T("Solar"),`<div class="flex"><span class="big">${num(so.power,0)} W</span><span class="sub">${T("today %s kWh",num(so.yield_kwh,2))}</span></div><div class="bar"><i style="width:${so.power/pvMax*100}%;background:linear-gradient(90deg,#8a4d06,#f5b32b)"></i></div>`));
-  }
+  /* power: the display's Power tab */
+  c.push(card(T("Power"),powerCard(d),"wide"));
 
-  /* temperatures */
+  /* weather and temperatures, together right under Power */
   const tt=(d.temperatures||[]).map(x=>`<div class="tile"><div class="sub">${esc(x.name)}</div><span class="mid">${num(x.temperature,1)}</span><span class="sub">°C</span></div>`);
-  if(d.weather&&d.weather.temperature!=null)tt.push(`<div class="tile"><div class="sub">${T("Weather")}</div><span class="mid">${num(d.weather.temperature,1)}</span><span class="sub">°C</span></div>`);
-  if(tt.length)c.push(card(T("Temperatures"),`<div class="tiles">${tt.join("")}</div>`));
+  const w=d.weather||{};
+  let wb;
+  if(w.temperature!=null){
+    wb=`<div class="flex"><span><span class="big">${num(w.temperature,1)}°</span> <span class="sub">${esc(w.condition)}</span></span><span class="sub">${T("H %s° · L %s°",num(w.today_max),num(w.today_min))}</span></div><div class="sub" style="margin-top:6px">${T("Feels %s°",num(w.feels_like,1))} · ${T("humidity %s",num(w.humidity)+"%")} · ${T("wind %s m/s",num(w.wind,1))}</div>`;
+    if(w.forecast)wb+=`<div class="fc">${w.forecast.map(f=>`<div><b>${esc(f.day)}</b><div class="sub">${esc(f.condition)}</div>${num(f.max)}° / ${num(f.min)}°</div>`).join("")}</div>`;
+  }else wb=`<div class="empty">${d.has_location===false?T("No location set"):T("Loading weather…")}</div>`;
+  c.push(tt.length?`<section class="card wide"><div class="wt"><div><h2>${T("Temperatures")}</h2><div class="tiles">${tt.join("")}</div></div><div><h2>${T("Weather")}</h2>${wb}</div></div></section>`:card(T("Weather"),wb,"wide"));
 
   /* history */
   const h=d.history;
@@ -199,20 +275,6 @@ function render(d){
     const sl=[spark(h.recent.solar,"var(--solar)",T("Solar"),"W"),spark(h.recent.soc,"var(--blue)",T("Battery"),"%"),spark(h.recent.load,"var(--load)",T("Consumption"),"W")].filter(x=>x);
     // full width only with two or three charts; a single one fits in a normal card
     if(sl.length)c.push(card(T("Last 10 minutes"),`<div class="tiles" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">${sl.join("")}</div>`,sl.length>1?"wide":""));
-  }
-
-  /* weather */
-  const w=d.weather||{};
-  if(w.temperature!=null){
-    let b=`<div class="flex"><span><span class="big">${num(w.temperature,1)}°</span> <span class="sub">${esc(w.condition)}</span></span><span class="sub">${T("H %s° · L %s°",num(w.today_max),num(w.today_min))}</span></div><div class="sub" style="margin-top:6px">${T("Feels %s°",num(w.feels_like,1))} · ${T("humidity %s",num(w.humidity)+"%")} · ${T("wind %s m/s",num(w.wind,1))}</div>`;
-    if(w.forecast)b+=`<div class="fc">${w.forecast.map(f=>`<div><b>${esc(f.day)}</b><div class="sub">${esc(f.condition)}</div>${num(f.max)}° / ${num(f.min)}°</div>`).join("")}</div>`;
-    c.push(card(T("Weather"),b));
-  }else c.push(card(T("Weather"),`<div class="empty">${d.has_location===false?T("No location set"):T("Loading weather…")}</div>`));
-
-  /* Victron */
-  if(d.victron){
-    const b=d.victron.length?d.victron.map(v=>`<div class="row"><div><div class="name">${esc(v.name)}</div><div class="sub">${esc(v.type)}</div></div><div class="r">${v.power!=null?num(v.power,0)+(v.type=="Inverter"||v.type==T("Inverter")?" VA":" W")+"<br>":""}${v.charging?`<span class="chg">⚡ ${T("Charging")}</span>`:`<span class="sub">${esc(v.state||v.status)}</span>`}</div></div>`).join(""):`<div class="empty">${T("No Victron devices added")}</div>`;
-    c.push(card("Victron",b));
   }
 
   /* the board's own battery */

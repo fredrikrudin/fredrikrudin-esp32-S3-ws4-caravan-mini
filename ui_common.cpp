@@ -319,7 +319,7 @@ void build_ui() {
      0 Start, 1 Power, 2 Ruuvi, 3 Weather, 4 Settings */
   tab_home = lv_tabview_add_tab(tv, LV_SYMBOL_HOME);  // start page
   tab_power = lv_tabview_add_tab(tv, "Power");
-  tab_temp = lv_tabview_add_tab(tv, "Ruuvi");
+  tab_temp = lv_tabview_add_tab(tv, "Temperature");
   tab_weather = lv_tabview_add_tab(tv, "Weather");
   tab_settings = lv_tabview_add_tab(tv, LV_SYMBOL_SETTINGS);  // gear icon
   settings_pad_bottom = lv_obj_get_style_pad_bottom(tab_settings, LV_PART_MAIN);

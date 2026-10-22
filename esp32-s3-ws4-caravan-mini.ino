@@ -5,7 +5,7 @@
  * the esp32-S3-ws4-caravan firmware without relays, Shelly devices, schedules and
  * the battery BMS, kept small for stability.
  *
- * Tabs: Home | Power (Victron BLE) | Ruuvi (RuuviTag) | Weather | Settings
+ * Tabs: Home | Power (Victron BLE) | Temperature (RuuviTags) | Weather | Settings
  * Web page with battery, solar, Victron, Ruuvi and weather: http://<board IP>/ (JSON at /json)
  * See README.md for libraries and Arduino IDE settings.
  *

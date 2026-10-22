@@ -26,7 +26,7 @@ devices, RuuviTags, WiFi and the web password carry over in either direction.
 | ![Alarm](screen-alarm.png) | ![History](screen-history.png) |
 | **Warnings and alarms** – a banner on Home, orange for warnings and red for alarms | **History** – solar and consumption per hour or per day, reached by tapping a Power tile |
 | ![Ruuvi](screen-ruuvi.png) | ![Weather](screen-weather.png) |
-| **Ruuvi** – each tag with its reading and the last 7 days: daily low in blue, high in orange | **Weather** – now, today's high and low, and three days ahead; updated hourly, or now with Refresh |
+| **Temperature** – each RuuviTag with its reading and the last 7 days: daily low in blue, high in orange | **Weather** – now, today's high and low, and three days ahead; updated hourly, or now with Refresh |
 | ![Settings: Connect](screen-settings.png) | ![Settings: Sensors](screen-settings-sensors.png) |
 | **Settings → Connect** – WiFi, the web page and the weather location | **Settings → Sensors** – RuuviTags, Victron devices and the scan interval |
 | ![Settings: Device](screen-settings-device.png) | ![Settings: Debug](screen-settings-debug.png) |
@@ -43,7 +43,7 @@ devices, RuuviTags, WiFi and the web password carry over in either direction.
 |---|---|
 | **⌂ Start** | Large clock and date between two gradient gauges: battery on the left with Time To Go, solar on the right. Ten-minute graphs under each, then inside and outside temperature. A warning banner appears across the top when something needs attention |
 | **Power** | The battery in the middle, chargers on the left, the AC side on the right, DC loads below. Each connection lights up in its device's colour while energy flows, and the solar, battery and loads tiles carry a ten-minute graph. Tap any tile for the history: solar and consumption per hour over 24 hours, or per day over 7 days |
-| **Ruuvi** | Up to 3 named RuuviTags: temperature, humidity, pressure, tag battery and signal, and a chart of the last 7 days per tag: each day's low (blue) and high (orange), in the colours of Victron VRM. The 7-day high and low sit under the reading. The history is kept in flash, so it survives a restart |
+| **Temperature** | Up to 3 named RuuviTags: temperature, humidity, pressure, tag battery and signal, and a chart of the last 7 days per tag: each day's low (blue) and high (orange), in the colours of Victron VRM. The 7-day high and low sit under the reading. The history is kept in flash, so it survives a restart |
 | **Weather** | Current conditions, high and low, feels-like, humidity, wind and a 3-day forecast (Open-Meteo). Fetched every hour while the screen is awake, never while the screen saver is on (it catches up as soon as the screen wakes), and at once with the **Refresh** button. A failed fetch is tried again after a minute |
 | **⚙ Settings** | Three sub-tabs: Connect, Sensors, Device |
 
@@ -74,7 +74,7 @@ Each page is a column of cards.
 | **Device** | **Language** (English, Svenska) &middot; **Power** (onboard LiPo, battery mode and its shutdown threshold) &middot; **Display** (brightness, screen saver brightness) &middot; **Alarms** (thresholds, wake the screen, SD warning) &middot; **SD card** (mount, eject, probe, logs, CSV, backup) &middot; **Debug** (serial monitor, performance log) &middot; **About** &middot; **System** (restart, shut down, full reset) |
 
 Temperature has an on/off switch: switching it off also stops decoding RuuviTags and takes the
-Ruuvi tab off the tab bar.
+Temperature tab off the tab bar.
 
 
 ## Language
@@ -104,7 +104,7 @@ To adjust the look, change these lines at the top of `ui_saver.cpp`:
 
 **Warnings and alarms** appear as a banner on the Home page and at the top of the web page: battery SOC below your thresholds, battery voltage out of range, inverter alarms, a Victron device gone quiet, WiFi lost, strong wind and SD card trouble. Thresholds are set under Settings → Alarms, and a new alarm can wake the screen saver.
 
-A **web page** shows everything on the display: warnings, battery and solar, temperatures, charts of the last 24 hours and 10 minutes, the weather, the Victron devices and the board battery. It only shows; nothing can be switched from it. Open **`http://caravan.local/`** (or the board's IP, shown under Settings → WiFi) on a phone, tablet or computer on the same WiFi. The page adapts to the screen: one column on a phone, two or three on a tablet or PC. It is one fixed file that the browser keeps; after that it fetches `/json` every 30 seconds (every 2 minutes once left alone; **Update** fetches at once) and draws itself, so the board does little work per update. If the board doesn't answer, the page says so and keeps the last values. The same data is available to scripts and Home Assistant at `/json`, and the recent log at `/log`. `sh tools/webpreview/build.sh` runs the page on a PC with example data (add `sv` for Swedish).
+A **web page** shows everything on the display. At the top is **Power**, laid out like the display's Power tab: chargers on the left, the battery monitor in the middle, the AC side on the right and the DC loads below, with lines that light up and move while energy flows. Below it are the temperatures and the weather side by side, then the charts of the last 24 hours and 10 minutes, the warnings and the board battery. It only shows; nothing can be switched from it. Open **`http://caravan.local/`** (or the board's IP, shown under Settings → WiFi) on a phone, tablet or computer on the same WiFi. The page adapts to the screen: one column on a phone, two or three on a tablet or PC. It is one fixed file that the browser keeps; after that it fetches `/json` every 30 seconds (every 2 minutes once left alone; **Update** fetches at once) and draws itself, so the board does little work per update. If the board doesn't answer, the page says so and keeps the last values. The same data is available to scripts and Home Assistant at `/json`, and the recent log at `/log`. `sh tools/webpreview/build.sh` runs the page on a PC with example data (add `sv` for Swedish).
 
 The web server can be switched off entirely under **Settings → Connect → Web page**, which frees
 the memory the page building uses. Otherwise, under **Settings → Web page** you can name the page (default "Caravan") and set a password; the page then asks for it once (the login lasts 30 days, or until the board restarts or the password changes). Scripts can use `/json?key=<password>`. Leave the password empty for no login. The page uses plain HTTP, so the password keeps casual visitors on the same WiFi out, but is not strong security. The address follows the name: a page called "Cabby 620" is at `http://cabby-620.local/` (lower case, spaces become dashes, å ä ö become a a o). Without a name it is `caravan.local`, set by `MDNS_NAME` in `app.h`.
@@ -163,7 +163,7 @@ Everything is in one flat folder. `app.h` holds the shared configuration, data t
 | `ui_power.cpp` | Power tab |
 | `history.cpp` | Energy history: hourly and daily totals |
 | `ui_history.cpp` | History screen (bar chart, opened from the Power tab) |
-| `ui_temp.cpp` | Ruuvi tab (RuuviTag cards with a 7-day chart each) |
+| `ui_temp.cpp` | Temperature tab (RuuviTag cards with a 7-day chart each) |
 | `ruuvi_hist.cpp` | Daily low and high per RuuviTag for the last 7 days, kept in flash |
 | `ui_weather.cpp` | Weather tab and clock |
 | `ui_settings.cpp` | Settings tab (WiFi, location, RuuviTags, display, scan interval) |

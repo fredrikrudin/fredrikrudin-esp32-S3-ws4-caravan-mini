@@ -19,7 +19,7 @@ being sorted out there. Focus: stability, Victron, RuuviTags and the web page.
 - Bluetooth only listens now: no connections, no pairing, no bonds kept in flash. The
   task stacks and mutexes of the BMS and Shelly connections are gone, which leaves more
   internal RAM for WiFi and the web server.
-- Tabs: Home, Power, Ruuvi, Weather, Settings. Settings has three pages: Connect,
+- Tabs: Home, Power, Temperature, Weather, Settings. Settings has three pages: Connect,
   Sensors, Device (the Control page held only removed features).
 - Battery figures come from the Victron battery monitor only (there is no BMS fallback),
   on the display, the web page, the alarms, the history and the CSV.
@@ -35,6 +35,18 @@ being sorted out there. Focus: stability, Victron, RuuviTags and the web page.
 - The Memory log line every 10 minutes reports Bluetooth scans only.
 - Swedish translation updated; `lang/sv.po` holds only the texts this firmware uses.
 - Tools: the screenshot and web preview tools dropped the removed features.
+- **Web page: a Power card at the top**, laid out like the display's Power tab: solar and
+  DC-DC chargers on the left, the battery monitor in the middle (charge bar, volts, amps,
+  watts, time left), the AC charger and inverter on the right, DC loads below. A line lights
+  up and moves in the device's colour while energy flows, idle devices turn grey and an
+  inverter alarm turns its box red. It replaces the Battery, Solar and Victron cards.
+  On a phone the chargers sit two by two above the battery.
+- Web page: the temperatures and the weather are one card, side by side, right under Power.
+- The Ruuvi tab on the display is called **Temperature** again (Swedish: Temperatur), and
+  with no tags added it says "No sensors added."
+- `/json`: each Victron device also has `kind`, `ok`, `flow` and its own figures (`v`, `a`,
+  `yield_kwh`, `in_v`, `out_v`, `ac_v`, `ac_i`, `alarm`, `temp`), and there is a new `loads`
+  object with the calculated DC loads. The existing fields are unchanged.
 
 ## esp32-S3-ws4-caravan 1.0 — 2026-10-08
 

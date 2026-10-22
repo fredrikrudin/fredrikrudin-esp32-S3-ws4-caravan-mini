@@ -265,7 +265,7 @@ struct SplashCfg {
   uint8_t seconds;  // how long it stays, 0 = skip it
 };
 
-/* Ruuvi tab history: daily low and high per added tag (ruuvi_hist.cpp) */
+/* Temperature tab history: daily low and high per added tag (ruuvi_hist.cpp) */
 #define RUUVI_DAYS 7
 #define RUUVI_NONE INT16_MIN  // no reading that day
 struct RuuviDay {
@@ -481,7 +481,7 @@ void power_timer_cb(lv_timer_t *t);
 void ruuvi_hist_note(int slot, const char *mac, float temp);     // a reading from an added tag
 bool ruuvi_hist_get(int slot, const char *mac, RuuviHist *out);  // false: nothing for this tag yet
 
-/* ui_temp.cpp (the Ruuvi tab) */
+/* ui_temp.cpp (the Temperature tab) */
 void build_temp_tab();
 void ruuvi_timer_cb(lv_timer_t *t);
 

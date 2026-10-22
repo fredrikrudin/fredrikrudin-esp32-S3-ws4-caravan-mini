@@ -520,9 +520,65 @@ static void handle_json() {
     } else if (ok && cfg[i].type != VIC_BATTMON) {
       add(s, ",\"state\":\"%s\"", tr(vic_state_name(dat[i].state)));
     }
+    /* for the Power card: the same figures as the display's Power tab */
+    const VicData &d = dat[i];
+    uint8_t ty = cfg[i].type;
+    const char *kind = ty == VIC_SOLAR ? "solar" : ty == VIC_BATTMON ? "batt" : ty == VIC_INVERTER ? "inv"
+                     : ty == VIC_DCDC ? "dcdc" : ty == VIC_ACCHG ? "ac" : "other";
+    bool flow = ok && ((ty == VIC_SOLAR && !isnan(d.pv_w) && d.pv_w > 2) ||
+                       (ty == VIC_ACCHG && !isnan(d.batt_v) && !isnan(d.batt_i) && d.batt_v * d.batt_i > 2) ||
+                       (ty == VIC_DCDC && vic_active_state(d.state)) || (ty == VIC_INVERTER && d.state == 9));
+    add(s, ",\"kind\":\"%s\",\"ok\":%s,\"flow\":%s", kind, ok ? "true" : "false", flow ? "true" : "false");
+    if (ok) {
+      s += ',';
+      num_json(s, "v", d.batt_v, 2);
+      s += ',';
+      num_json(s, "a", d.batt_i, 1);
+      if (ty == VIC_SOLAR) {
+        s += ',';
+        num_json(s, "yield_kwh", d.yield_kwh, 2);
+      } else if (ty == VIC_DCDC) {
+        s += ',';
+        num_json(s, "in_v", d.in_v, 2);
+        s += ',';
+        num_json(s, "out_v", d.out_v, 2);
+      } else if (ty == VIC_INVERTER) {
+        s += ',';
+        num_json(s, "ac_v", d.ac_v, 0);
+        s += ',';
+        num_json(s, "ac_i", d.ac_i, 1);
+        add(s, ",\"alarm\":%s", (vic_alarm_text(d.alarm) || d.state == 2) ? "true" : "false");
+      } else if (ty == VIC_BATTMON) {
+        s += ',';
+        num_json(s, "temp", d.temp_c, 0);
+      }
+    }
     s += '}';
   }
   s += "],";
+
+  /* ---- DC loads, worked out like the display's Power tab: what the chargers put
+     out minus what goes into the battery (the DC-DC charger is not measured) ---- */
+  if (bm >= 0 && !isnan(dat[bm].batt_v) && !isnan(dat[bm].batt_i)) {
+    float in_w = 0;
+    bool dcdc = false, inv = false;
+    for (int i = 0; i < MAX_VIC; i++) {
+      if (!vic_ok(i, now)) continue;
+      const VicData &d = dat[i];
+      if ((cfg[i].type == VIC_SOLAR || cfg[i].type == VIC_ACCHG) && !isnan(d.batt_v) && !isnan(d.batt_i)) in_w += d.batt_v * d.batt_i;
+      if (cfg[i].type == VIC_DCDC && vic_active_state(d.state)) dcdc = true;
+      if (cfg[i].type == VIC_INVERTER && d.state == 9) inv = true;
+    }
+    float loads = in_w - dat[bm].batt_v * dat[bm].batt_i;
+    if (loads < 0) loads = 0;
+    const char *note = dcdc && inv ? N_("Calc. excl. DC-DC, incl. inv.")
+                     : dcdc        ? N_("Calculated, excl. DC-DC")
+                     : inv         ? N_("Calculated, incl. inverter")
+                                   : N_("Calculated");
+    add(s, "\"loads\":{\"power\":%.0f,\"note\":\"%s\"},", loads, tr(note));
+  } else {
+    s += "\"loads\":null,";
+  }
 
   /* ---- warnings and alarms ---- */
   s += "\"alarms\":[";
