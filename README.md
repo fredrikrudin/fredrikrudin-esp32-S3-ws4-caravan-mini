@@ -56,7 +56,7 @@ battery SOC below your thresholds, battery voltage out of range, inverter alarms
 device gone quiet, WiFi lost, strong wind, and optionally the SD card. Thresholds are under Settings → Device → Alarms, and a new alarm can wake the screen.
 
 **Running on the onboard battery**: with a LiPo fitted and the setting switched on, losing
-external power turns the display into a local instrument: WiFi and Bluetooth off, screen at 10%,
+external power turns the display into a local instrument: WiFi off, Bluetooth listening once every 5 minutes, the screen dimmed until touched,
 the last readings kept on screen and a "Running on battery" banner along the
 bottom. At your threshold it closes the log, unmounts the card and sleeps.
 
@@ -251,8 +251,8 @@ Switch on **Settings → SD card** to also append everything to `/caravan.log` o
 
 **Running on the onboard battery:** with a LiPo in the board's connector and "Keep running on the
 battery" switched on under Settings → Device → Power, losing external power turns the display into
-a local instrument: WiFi and Bluetooth off, screen at 10%, the last readings kept on
-screen and a "Running on battery" banner along the bottom with the charge left. At the threshold
+a local instrument: WiFi off, Bluetooth
+listening once every 5 minutes so the readings stay current, the screen dimmed until touched and a "Running on battery" banner along the bottom with the charge left. At the threshold
 you set (20% by default) it closes the log, unmounts the card and sleeps. Plugging power back in
 restarts the board so both radios come up cleanly. A 1200 mAh cell lasts roughly 10–15 hours.
 

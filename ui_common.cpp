@@ -51,7 +51,9 @@ void kb_hide() {
 static void ta_event_cb(lv_event_t *e) {
   lv_event_code_t code = lv_event_get_code(e);
   lv_obj_t *ta = lv_event_get_target(e);
-  if (code == LV_EVENT_FOCUSED || code == LV_EVENT_CLICKED) {
+  /* only on a real tap: LVGL focuses a field as soon as a finger lands on it, also
+     when the finger then scrolls the page, but sends CLICKED only when it didn't */
+  if (code == LV_EVENT_CLICKED) {
     kb_show(ta);
   } else if (code == LV_EVENT_DEFOCUSED) {
     kb_hide();

@@ -110,8 +110,8 @@ void perf_service() {
 /* ---------- running on the onboard LiPo ----------
  * There is no "external power lost" signal, so it is inferred from the cell:
  * not charging, and the voltage falling steadily. On battery the board becomes a
- * local display: WiFi and Bluetooth off, screen dimmed, CPU slowed, and whatever
- * was last collected stays on screen. Below the shutdown threshold it closes the
+ * local display: WiFi off, Bluetooth scanning once every 5 minutes so the Victron
+ * and RuuviTag readings stay current, and the screen dimmed until touched. Below the shutdown threshold it closes the
  * log, unmounts the card and sleeps, so the cell is never run flat.
  */
 static bool on_battery = false;
@@ -141,12 +141,20 @@ static void enter_battery_mode(int pct) {
   log_fault("Power: external power lost, running on the battery (%d%%)", pct);
 
   /* a local display from here on */
-  ble_pause_scan(true);
-  if (NimBLEDevice::isInitialized()) NimBLEDevice::deinit(true);
   WiFi.disconnect(true, false);
   WiFi.mode(WIFI_OFF);
+  /* Bluetooth stays on, but listens only one scan every 5 minutes (BATT_SCAN_S in
+     ble.cpp), so the Victron and RuuviTag readings keep coming at little cost */
+  ble_pause_scan(false);  // in case WiFi was joining and had paused it
+  ble_scan_now();         // the first one now, then every 5 minutes
+  logf("Power: Bluetooth now scans every %d minutes", BATT_SCAN_S / 60);
 
-  set_backlight(10);  // the CPU stays at 240 MHz: 80 MHz froze the board
+  /* dim straight away, as the screen saver: a tap brings the screen back at full
+     brightness, and it dims again after 30 s without touch. (Dimming the main
+     screen directly left it dark with nothing to bring it back: touches went to
+     the dark screen, so the board looked switched off.) The CPU stays at 240 MHz:
+     80 MHz froze the board. */
+  saver_show_now();
 
   make_banner();
   lv_obj_clear_flag(batt_banner, LV_OBJ_FLAG_HIDDEN);
@@ -172,7 +180,7 @@ static void soft_shutdown(int pct) {
   sd_log_unmount();  // flush and close the log first
   set_backlight(0);
   delay(200);
-  esp_deep_sleep_start();  // the reset button, or external power, starts it again
+  esp_deep_sleep_start();  // only the reset button starts it again
 }
 
 /* Called from loop(); samples the cell every 20 s.

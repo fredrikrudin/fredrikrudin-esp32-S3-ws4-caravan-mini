@@ -34,6 +34,17 @@ being sorted out there. Focus: stability, Victron, RuuviTags and the web page.
   and a settings backup from either firmware can be restored on the other.
 - The Memory log line every 10 minutes reports Bluetooth scans only.
 - Swedish translation updated; `lang/sv.po` holds only the texts this firmware uses.
+- **Settings scroll without opening the keyboard.** The keyboard opened as soon as a finger
+  landed on a text field, also when the finger went on to scroll the page. It now opens
+  only on a tap.
+- **On the LiPo, Bluetooth keeps reading the sensors**: one scan every 5 minutes (5 s long,
+  with the radio to itself since WiFi is off) instead of switching Bluetooth off, so Victron
+  and RuuviTag values stay current. With Settings open it still scans every 10 s.
+- **Battery mode no longer looks switched off.** Going onto the LiPo dimmed the main screen
+  to 10% directly, and nothing brought it back: touches went to the dark screen, so the
+  board seemed dead until the screen saver happened to take over. It now shows the screen
+  saver straight away (dim clock and the "Running on battery" banner); a tap brings the
+  screen back at full brightness and it dims again after 30 s without touch.
 - Tools: the screenshot and web preview tools dropped the removed features.
 - **Web page: a Power card at the top**, laid out like the display's Power tab: solar and
   DC-DC chargers on the left, the battery monitor in the middle (charge bar, volts, amps,

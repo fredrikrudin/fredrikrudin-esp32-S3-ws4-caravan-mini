@@ -376,6 +376,7 @@ const char *vic_status(const VicData &d, uint8_t type, uint32_t now);
 /* ble.cpp */
 void ble_start();
 void ble_scan_service();          // call from loop()
+#define BATT_SCAN_S 300  // on the LiPo: one Bluetooth scan every 5 minutes
 void ble_pause_scan(bool pause);  // stop scanning (while WiFi joins, before deep sleep)
 
 /* sdlog.cpp (log to Serial, to a ring buffer readable at /log, and to the TF card) */
@@ -503,6 +504,7 @@ void victron_settings_refresh(const VicCfg *cfg, const VicData *dat, const VicSe
 /* ui_saver.cpp */
 void build_saver();
 void saver_timer_cb(lv_timer_t *t);
+void saver_show_now();  // dim to the screen saver at once (battery mode)
 
 /* ================================================================== */
 /* Translation of text given to LVGL                                  */

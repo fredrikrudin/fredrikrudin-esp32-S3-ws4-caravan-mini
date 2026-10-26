@@ -48,8 +48,14 @@ void ble_scan_now() {
 }
 
 /* A reading is "lost" after base_ms, or after three missed scans if that is longer */
+static uint32_t scan_every_s() {
+  if (tab_visible(tab_settings)) return SCAN_MIN_S;  // devices to add show up quickly
+  if (power_on_battery()) return BATT_SCAN_S > scan_interval_s ? BATT_SCAN_S : scan_interval_s;
+  return scan_interval_s;
+}
+
 uint32_t sensor_stale_ms(uint32_t base_ms) {
-  uint32_t three = 3UL * scan_interval_s * 1000UL + 5000UL;
+  uint32_t three = 3UL * scan_every_s() * 1000UL + 5000UL;
   return three > base_ms ? three : base_ms;
 }
 
@@ -63,7 +69,7 @@ void ble_scan_service() {
     if (scan->isScanning()) scan->stop();
     next_scan = millis();
   }
-  uint32_t every = tab_visible(tab_settings) ? SCAN_MIN_S : scan_interval_s;
+  uint32_t every = scan_every_s();
   if ((int32_t)(next_scan - millis()) > (int32_t)(every * 1000UL)) next_scan = millis() + every * 1000UL;  // Settings just opened
   /* how much internal RAM a scan leaves behind (power.cpp, "Memory:" line) */
   static bool measuring = false;
@@ -94,6 +100,11 @@ void ble_scan_service() {
      each device is let go as soon as it has been read. Names are only needed to
      pick devices in Settings. */
   scan->setActiveScan(tab_visible(tab_settings));
-  scan->start(3000, false, true);  // not "continue": starts with an empty list
+  /* On the LiPo WiFi is off, so a scan can have the radio to itself (window =
+     interval) and runs a little longer, to be sure of catching every device in the
+     one scan per 5 minutes; the radio sleeps in between. */
+  bool batt = power_on_battery();
+  scan->setWindow(batt ? 100 : 50);
+  scan->start(batt ? 5000 : 3000, false, true);  // not "continue": starts with an empty list
   next_scan = millis() + every * 1000UL;
 }

@@ -378,7 +378,7 @@ static lv_obj_t *lbl_battmode, *sl_battpct;
 static void update_battmode_label() {
   lv_label_set_text_fmt(lbl_battmode,
                         feat_battmode
-                          ? "On battery: WiFi and Bluetooth off, screen at 10%%, last readings kept.\nShuts down at %d%%."
+                          ? "On battery: WiFi off, sensors read every 5 minutes, screen dimmed until touched.\nShuts down at %d%%."
                           : TR("Battery mode off: the board keeps running normally until the cell is flat."),
                         batt_shutdown_pct);
 }

@@ -175,7 +175,7 @@ static const TrPair tr_sv[] = {
   { "charging", "laddar" },
   { "SW6106 found: light-load shutdown disabled", "SW6106 hittad: avstängning vid låg last avslagen" },
   { "No SW6106 on this board", "Ingen SW6106 på det här kortet" },
-  { "On battery: WiFi and Bluetooth off, screen at 10%%, last readings kept.\nShuts down at %d%%.", "På batteri: WiFi och Bluetooth av, skärmen på 10%%, senaste värden visas.\nStänger av vid %d%%." },
+  { "On battery: WiFi off, sensors read every 5 minutes, screen dimmed until touched.\nShuts down at %d%%.", "På batteri: WiFi av, givarna läses var 5:e minut, skärmen nedtonad tills du rör den.\nStänger av vid %d%%." },
   { "Battery mode off: the board keeps running normally until the cell is flat.", "Batteriläge av: kortet går som vanligt tills cellen är tom." },
   { "Battery: warning below %d%%, alarm below %d%%%s", "Batteri: varning under %d%%, larm under %d%%%s" },
   { "Wind warning off", "Vindvarning av" },
