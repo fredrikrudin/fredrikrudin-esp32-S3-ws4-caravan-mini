@@ -34,6 +34,20 @@ being sorted out there. Focus: stability, Victron, RuuviTags and the web page.
   and a settings backup from either firmware can be restored on the other.
 - The Memory log line every 10 minutes reports Bluetooth scans only.
 - Swedish translation updated; `lang/sv.po` holds only the texts this firmware uses.
+- **Start page: a weather symbol** top left, opposite the WiFi signal: sun or moon, clouds,
+  rain, showers, snow, fog or thunder in its own colour, with the outside temperature. Night
+  symbols follow today's sunrise and sunset (now fetched with the weather). The symbols are
+  Font Awesome Free (`font_weather.c`, made by `tools/gen_font_weather.py`, about 4 kB).
+- **Start page bottom bar: only the RuuviTags**, three columns with the temperature over the
+  name. The outside temperature moved up beside the weather symbol;
+  with no tags added the bar is hidden.
+- **Power tab: a History button** top right, opening the same history screen as tapping a
+  tile (solar and consumption per hour or per day).
+- Tested with NimBLE-Arduino 2.5.2 (fixes for connections and remote reads); the README
+  now names it.
+- README: GFX Library for Arduino 1.6 or later is now strongly recommended, with the memory
+  measured on the board (104 kB free after WiFi instead of 45 kB), and what to do if the
+  picture shifts with the smaller bounce buffers.
 - **Settings scroll without opening the keyboard.** The keyboard opened as soon as a finger
   landed on a text field, also when the finger went on to scroll the page. It now opens
   only on a tap.

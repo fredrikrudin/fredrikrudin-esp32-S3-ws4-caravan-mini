@@ -149,3 +149,30 @@ void net_poll_cb(lv_timer_t *t) {
   xSemaphoreGive(g_mtx);
   if (wx) show_weather(w);
 }
+
+/* ---------- weather symbols (start page) ----------
+   WMO weather codes as Open-Meteo sends them, mapped to the Font Awesome glyphs in
+   font_weather.c, each with a colour of its own */
+const char *wx_symbol(int code, bool day, uint32_t *color) {
+  if (code <= 1) { *color = day ? 0xF5B32B : 0xC8D2E0; return day ? "\uF185" : "\uF186"; }  // sun / moon
+  if (code == 2) { *color = day ? 0xF5C04A : 0xC8D2E0; return day ? "\uF6C4" : "\uF6C3"; }  // cloud-sun / cloud-moon
+  if (code == 3) { *color = 0xB0B8C0; return "\uF0C2"; }                                       // cloud
+  if (code == 45 || code == 48) { *color = 0x9AA3AD; return "\uF75F"; }                        // fog, mist
+  if ((code >= 71 && code <= 77) || code == 85 || code == 86) { *color = 0xE6F2FF; return "\uF2DC"; }  // snow
+  if (code >= 95) { *color = 0xF39C12; return "\uF76C"; }                                      // thunder
+  if (code == 65 || code == 67 || code == 82) { *color = 0x38A9F5; return "\uF740"; }          // heavy rain
+  if (code == 80 || code == 81) { *color = 0x38A9F5; return day ? "\uF743" : "\uF73C"; }     // showers
+  if (code >= 51 && code <= 67) { *color = 0x38A9F5; return "\uF73D"; }                        // drizzle, rain
+  *color = 0xB0B8C0;
+  return "\uF0C2";
+}
+
+bool wx_daytime(const Weather &w) {
+  time_t t = time(nullptr);
+  if (t < 1700000000) return true;  // no clock yet
+  LOCK();
+  int32_t off = g.utc_offset;
+  UNLOCK();
+  int m = (int)(((t + off) % 86400) / 60);
+  return m >= w.sunrise_min && m < w.sunset_min;
+}

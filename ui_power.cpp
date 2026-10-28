@@ -15,9 +15,10 @@
 #define COL_INV 0x8E44AD
 #define COL_ALARM 0xC0392B
 #define COL_LINE 0x5D6D7E
-/* The extra button upset the page layout on the board, so it is off:
-   tapping any tile opens the history instead. Set to 1 to try it again. */
-#define SHOW_HISTORY_BUTTON 0
+/* A History button top right (tapping any tile opens the history too). It was off
+   once because, at the bottom edge, it upset the page layout on the board; it now
+   sits at the top, well inside the page. Set to 0 to hide it. */
+#define SHOW_HISTORY_BUTTON 1
 
 struct Tile {
   lv_obj_t *box, *fill, *title, *big, *l1, *l2, *spark;
@@ -172,7 +173,7 @@ void build_power_tab() {
   lv_obj_align(tiles[T_LOADS].big, LV_ALIGN_TOP_MID, 0, 26);
 
 #if SHOW_HISTORY_BUTTON
-  /* A link in the corner, for when no tile is showing. Fixed position and size,
+  /* A button in the top right corner, also there when no tile is showing. Fixed position and size,
      so it can never make the page taller than the screen (which would let the
      tabview scroll and look like the tab bar had moved). */
   lv_obj_t *hist_btn = make_btn(
@@ -181,7 +182,7 @@ void build_power_tab() {
     });
   lv_obj_set_style_bg_color(hist_btn, lv_color_hex(0x2F3A45), 0);
   lv_obj_set_size(hist_btn, 104, 34);
-  lv_obj_set_pos(hist_btn, 370, 392);
+  lv_obj_set_pos(hist_btn, 366, 10);
 #endif
 
   lbl_power_empty = lv_label_create(tab_power);

@@ -50,3 +50,5 @@ others listed in [README.md](README.md#libraries)) keep their own licenses and a
 covered by this one. The Latin-1 fonts in `font_latin1.c` are generated from Montserrat,
 which is under the SIL Open Font License 1.1; the screen saver clock font in
 `font_clock_96.c` is generated from DejaVu Sans (Bitstream Vera / DejaVu font license).
+The weather symbols in `font_weather.c` are generated from Font Awesome Free 6.7.2 by
+Fonticons, Inc. (icons CC BY 4.0, font SIL OFL 1.1, <https://fontawesome.com/license/free>).

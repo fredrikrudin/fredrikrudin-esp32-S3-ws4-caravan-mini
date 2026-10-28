@@ -2,7 +2,7 @@
 /* Home tab: the start page, in the style of the Victron GX Boat Page.
    Straight gradient gauges along the left and right edges (battery and solar),
    the clock as the central figure, values beside each gauge, and a
-   summary line for the temperatures at the bottom. */
+   RuuviTag temperatures along the bottom, and the weather top left. */
 #include "app.h"
 
 #define COL_TRACK 0x10202C  // unlit part of a gauge
@@ -19,10 +19,11 @@ static lv_obj_t *bar_batt, *bar_solar;
 static lv_obj_t *lbl_soc, *lbl_batt_sub, *lbl_ttg_cap, *lbl_ttg;
 static lv_obj_t *lbl_solar, *lbl_solar_cap, *lbl_solar_sub;
 static lv_obj_t *home_clock, *home_date, *lbl_charging;
-static lv_obj_t *lbl_inside, *lbl_outside;
+static lv_obj_t *strip, *rv_col[MAX_RUUVI], *rv_temp[MAX_RUUVI], *rv_name[MAX_RUUVI];  // bottom strip
 static lv_obj_t *spark_batt, *spark_solar;
 static lv_obj_t *banner, *banner_lbl;
 static lv_obj_t *wifi_icon, *wifi_bar[4];
+static lv_obj_t *wx_icon, *wx_temp;  // weather, top left
 
 static float solar_scale = 400;  // gauge top of scale, grows with the highest reading seen
 
@@ -125,6 +126,23 @@ void build_home_tab() {
 
   make_wifi_indicator(tab_home);
 
+  /* weather, top left: opposite the WiFi indicator, beside the charging line */
+  lv_obj_t *wx = lv_obj_create(tab_home);
+  lv_obj_remove_style_all(wx);
+  lv_obj_set_size(wx, LV_SIZE_CONTENT, 28);
+  lv_obj_align(wx, LV_ALIGN_TOP_LEFT, 40, 40);
+  lv_obj_set_flex_flow(wx, LV_FLEX_FLOW_ROW);
+  lv_obj_set_flex_align(wx, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
+  lv_obj_set_style_pad_column(wx, 8, 0);
+  lv_obj_clear_flag(wx, LV_OBJ_FLAG_SCROLLABLE);
+  lv_obj_clear_flag(wx, LV_OBJ_FLAG_CLICKABLE);
+  wx_icon = lv_label_create(wx);
+  lv_obj_set_style_text_font(wx_icon, &font_weather_24, 0);
+  (lv_label_set_text)(wx_icon, "");  // a symbol: never translated
+  wx_temp = lv_label_create(wx);
+  lv_obj_set_style_text_color(wx_temp, lv_color_white(), 0);
+  lv_label_set_text(wx_temp, "");
+
   /* centre: charging indicator, clock, date */
   lbl_charging = make_value(tab_home, LV_ALIGN_TOP_MID, 0, 44, FONT_UI, 0x2ECC71);
   home_clock = lv_label_create(tab_home);
@@ -150,11 +168,11 @@ void build_home_tab() {
   spark_solar = make_sparkline(tab_home, COL_SOLAR_A, 150, 36, HIST_RECENT);
   lv_obj_set_pos(spark_solar, 290, 340);
 
-  /* bottom strip: inside and outside temperature */
-  lv_obj_t *strip = lv_obj_create(tab_home);
+  /* bottom strip: the RuuviTags, one column each: temperature over the name */
+  strip = lv_obj_create(tab_home);
   lv_obj_remove_style_all(strip);
-  lv_obj_set_pos(strip, 60, 386);
-  lv_obj_set_size(strip, 360, 40);
+  lv_obj_set_pos(strip, 50, 382);
+  lv_obj_set_size(strip, 380, 46);
   lv_obj_set_style_bg_color(strip, lv_color_hex(CARD_BG), 0);
   lv_obj_set_style_bg_opa(strip, LV_OPA_COVER, 0);
   lv_obj_set_style_radius(strip, 12, 0);
@@ -162,10 +180,26 @@ void build_home_tab() {
   lv_obj_set_flex_align(strip, LV_FLEX_ALIGN_SPACE_EVENLY, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
   lv_obj_clear_flag(strip, LV_OBJ_FLAG_SCROLLABLE);
   lv_obj_clear_flag(strip, LV_OBJ_FLAG_CLICKABLE);
-  lbl_inside = lv_label_create(strip);
-  lv_label_set_text(lbl_inside, "");
-  lbl_outside = lv_label_create(strip);
-  lv_label_set_text(lbl_outside, "");
+  for (int i = 0; i < MAX_RUUVI; i++) {
+    lv_obj_t *c = lv_obj_create(strip);
+    lv_obj_remove_style_all(c);
+    lv_obj_set_size(c, 120, LV_SIZE_CONTENT);
+    lv_obj_set_flex_flow(c, LV_FLEX_FLOW_COLUMN);
+    lv_obj_set_flex_align(c, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
+    lv_obj_clear_flag(c, LV_OBJ_FLAG_SCROLLABLE);
+    lv_obj_clear_flag(c, LV_OBJ_FLAG_CLICKABLE);
+    rv_temp[i] = lv_label_create(c);
+    lv_obj_set_style_text_font(rv_temp[i], ui_font(&lv_font_montserrat_16), 0);
+    lv_obj_set_style_text_color(rv_temp[i], lv_color_white(), 0);
+    lv_label_set_text(rv_temp[i], "");
+    rv_name[i] = lv_label_create(c);
+    lv_obj_set_style_text_color(rv_name[i], lv_color_hex(0x9E9E9E), 0);
+    lv_obj_set_width(rv_name[i], 116);
+    lv_obj_set_style_text_align(rv_name[i], LV_TEXT_ALIGN_CENTER, 0);
+    lv_label_set_long_mode(rv_name[i], LV_LABEL_LONG_DOT);
+    (lv_label_set_text)(rv_name[i], "");  // the user's names: not translated
+    rv_col[i] = c;
+  }
 }
 
 void home_timer_cb(lv_timer_t *t) {
@@ -283,27 +317,52 @@ void home_timer_cb(lv_timer_t *t) {
     set_sparkline(spark_solar, buf, HIST_RECENT, 20);
   }
 
-  /* ---- bottom strip ---- */
-  b[0] = 0;
-  if (feat_ruuvi && ruuvi_cfg[0].used) {
-    static RuuviTag copy[MAX_TAGS];
-    xSemaphoreTake(ruuvi_mtx, portMAX_DELAY);
-    memcpy(copy, tags, sizeof(tags));
-    xSemaphoreGive(ruuvi_mtx);
-    for (int i = 0; i < MAX_TAGS; i++) {
-      if (copy[i].used && !strcmp(copy[i].addr, ruuvi_cfg[0].mac) && copy[i].has_temp && (power_on_battery() || now - copy[i].last_seen < sensor_stale_ms(600000UL))) {
-        snprintf(b, sizeof(b), LV_SYMBOL_HOME " %.1f" DEG "C", copy[i].temp);
+  /* ---- bottom strip: one column per RuuviTag, temperature over the name ---- */
+  static RuuviTag copy[MAX_TAGS];
+  xSemaphoreTake(ruuvi_mtx, portMAX_DELAY);
+  memcpy(copy, tags, sizeof(tags));
+  xSemaphoreGive(ruuvi_mtx);
+  int shown = 0;
+  for (int s = 0; s < MAX_RUUVI; s++) {
+    bool used = feat_ruuvi && ruuvi_cfg[s].used;
+    if (!used) {
+      lv_obj_add_flag(rv_col[s], LV_OBJ_FLAG_HIDDEN);
+      continue;
+    }
+    lv_obj_clear_flag(rv_col[s], LV_OBJ_FLAG_HIDDEN);
+    shown++;
+    strcpy(b, "--");
+    for (int i = 0; i < MAX_TAGS; i++)
+      if (copy[i].used && !strcmp(copy[i].addr, ruuvi_cfg[s].mac) && copy[i].has_temp &&
+          (power_on_battery() || now - copy[i].last_seen < sensor_stale_ms(600000UL))) {
+        snprintf(b, sizeof(b), "%.1f" DEG "C", copy[i].temp);
         break;
       }
-    }
+    set_label(rv_temp[s], b);
+    if (strcmp(lv_label_get_text(rv_name[s]), ruuvi_cfg[s].name)) (lv_label_set_text)(rv_name[s], ruuvi_cfg[s].name);
   }
-  set_label(lbl_inside, b[0] ? b : LV_SYMBOL_HOME " --");
+  if (shown) lv_obj_clear_flag(strip, LV_OBJ_FLAG_HIDDEN);
+  else lv_obj_add_flag(strip, LV_OBJ_FLAG_HIDDEN);  // no tags added: nothing to show
 
   Weather w;
   LOCK();
   w = g.weather;
   UNLOCK();
-  if (w.valid) snprintf(b, sizeof(b), LV_SYMBOL_GPS " %.1f" DEG "C", w.temp);
-  else strcpy(b, LV_SYMBOL_GPS " --");
-  set_label(lbl_outside, b);
+
+  /* weather symbol and temperature, top left */
+  if (w.valid) {
+    uint32_t col;
+    const char *sym = wx_symbol(w.code, wx_daytime(w), &col);
+    if (strcmp(lv_label_get_text(wx_icon), sym)) (lv_label_set_text)(wx_icon, sym);
+    static uint32_t last_col = 0xFFFFFFFF;
+    if (col != last_col) {
+      last_col = col;
+      lv_obj_set_style_text_color(wx_icon, lv_color_hex(col), 0);
+    }
+    snprintf(b, sizeof(b), "%.0f" DEG "C", w.temp);
+    set_label(wx_temp, b);
+  } else {
+    if (lv_label_get_text(wx_icon)[0]) (lv_label_set_text)(wx_icon, "");
+    set_label(wx_temp, "");
+  }
 }

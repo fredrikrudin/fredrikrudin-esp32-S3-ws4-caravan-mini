@@ -138,6 +138,7 @@ struct Weather {
   float temp = 0, feels = 0, wind = 0;
   int humidity = 0, code = 0;
   float today_max = 0, today_min = 0;
+  int sunrise_min = 6 * 60, sunset_min = 20 * 60;  // today, minutes after local midnight
   char fc_day[3][8] = {};
   int fc_code[3] = {};
   float fc_max[3] = {}, fc_min[3] = {};
@@ -332,6 +333,10 @@ void set_wifi_status(const char *fmt, ...);
 void set_loc_status(const char *fmt, ...);
 void mac_short(const char *addr, char *out);  // "AA:BB:CC:DD:EE:FF" -> "EEFF"
 const char *wmo_text(int code);               // weather code -> text
+/* Weather symbols (font_weather.c, Font Awesome Free): one glyph each, in their own font */
+LV_FONT_DECLARE(font_weather_24)
+const char *wx_symbol(int code, bool day, uint32_t *color);  // weather code -> symbol and its colour
+bool wx_daytime(const Weather &w);                          // between today's sunrise and sunset
 String url_encode(const char *s);
 
 /* ================================================================== */

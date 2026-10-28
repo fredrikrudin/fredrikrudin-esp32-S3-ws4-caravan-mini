@@ -22,7 +22,7 @@ devices, RuuviTags, WiFi and the web password carry over in either direction.
 | | |
 |---|---|
 | ![Home](screen-home.png) | ![Power](screen-power.png) |
-| **Home** – clock between battery and solar gauges, ten-minute graphs under each, inside and outside temperature below, WiFi signal top right | **Power** – the battery in the middle, chargers left, AC side right, DC loads below; each connection lights up in its own colour while energy flows |
+| **Home** – clock between battery and solar gauges, ten-minute graphs under each, the RuuviTags below (temperature over name), weather symbol and outside temperature top left, WiFi signal top right | **Power** – the battery in the middle, chargers left, AC side right, DC loads below; each connection lights up in its own colour while energy flows |
 | ![Alarm](screen-alarm.png) | ![History](screen-history.png) |
 | **Warnings and alarms** – a banner on Home, orange for warnings and red for alarms | **History** – solar and consumption per hour or per day, reached by tapping a Power tile |
 | ![Ruuvi](screen-ruuvi.png) | ![Weather](screen-weather.png) |
@@ -41,8 +41,8 @@ devices, RuuviTags, WiFi and the web password carry over in either direction.
 
 | Tab | What it shows |
 |---|---|
-| **⌂ Start** | Large clock and date between two gradient gauges: battery on the left with Time To Go, solar on the right. Ten-minute graphs under each, then inside and outside temperature. A warning banner appears across the top when something needs attention |
-| **Power** | The battery in the middle, chargers on the left, the AC side on the right, DC loads below. Each connection lights up in its device's colour while energy flows, and the solar, battery and loads tiles carry a ten-minute graph. Tap any tile for the history: solar and consumption per hour over 24 hours, or per day over 7 days |
+| **⌂ Start** | Large clock and date between two gradient gauges: battery on the left with Time To Go, solar on the right. Ten-minute graphs under each, then up to three RuuviTags along the bottom, each with its temperature over its name. Top left a weather symbol (sun, moon, clouds, rain, snow, fog, thunder; day or night by today's sunrise and sunset) with the outside temperature, opposite the WiFi signal. A warning banner appears across the top when something needs attention |
+| **Power** | The battery in the middle, chargers on the left, the AC side on the right, DC loads below. Each connection lights up in its device's colour while energy flows, and the solar, battery and loads tiles carry a ten-minute graph. Tap any tile, or the **History** button top right, for the history: solar and consumption per hour over 24 hours, or per day over 7 days |
 | **Temperature** | Up to 3 named RuuviTags: temperature, humidity, pressure, tag battery and signal, and a chart of the last 7 days per tag: each day's low (blue) and high (orange), in the colours of Victron VRM. The 7-day high and low sit under the reading. The history is kept in flash, so it survives a restart |
 | **Weather** | Current conditions, high and low, feels-like, humidity, wind and a 3-day forecast (Open-Meteo). Fetched every hour while the screen is awake, never while the screen saver is on (it catches up as soon as the screen wakes), and at once with the **Refresh** button. A failed fetch is tried again after a minute |
 | **⚙ Settings** | Three sub-tabs: Connect, Sensors, Device |
@@ -170,6 +170,7 @@ Everything is in one flat folder. `app.h` holds the shared configuration, data t
 | `ui_victron_settings.cpp` | Victron device settings |
 | `ui_saver.cpp` | Screen saver |
 | `font_clock_96.c` | 96 px clock font for the screen saver (digits, `:` and `-`) |
+| `font_weather.c` | The start page's weather symbols, 24 px, from Font Awesome Free (`tools/gen_font_weather.py`) |
 | `lang.cpp` | Language: looks texts up in the built-in translations, swaps in the Latin-1 fonts |
 | `lang_tables.h` | The built-in translations, generated from `lang/*.po` by `tools/i18n.py` |
 | `font_latin1.c` | The Latin-1 letters (å ä ö é ü ...) missing from LVGL's built-in fonts, used when translated |
@@ -183,13 +184,25 @@ Everything is in one flat folder. `app.h` holds the shared configuration, data t
 ## Libraries
 
 - **lvgl 8.x** (with the `lv_conf.h` from Waveshare's examples)
-- **GFX Library for Arduino** 1.6 or later recommended (Library Manager; tested to compile with 1.6.9).
-  Waveshare's bundled 1.5.3 works too, but it always takes 77 kB of internal RAM for the display's
-  bounce buffers; with 1.6 the firmware sets them to 10 lines and about 58 kB more is free. The
-  boot log says which: `Internal heap after display init: … (bounce buffers 10 lines)`.
+- **GFX Library for Arduino 1.6 or later** (Library Manager; tested with 1.6.9). Strongly
+  recommended over Waveshare's bundled 1.5.3, which always takes 77 kB of internal RAM for the
+  display's bounce buffers. With 1.6 the firmware sets them to 10 lines and about 58 kB more is
+  free. The boot log says which: `Internal heap after display init: … (bounce buffers 10 lines)`.
+
+  Measured on the board (esp32-s3-ws4-caravan-mini, from the boot log):
+
+  | | GFX 1.5.3 | GFX 1.6.9 |
+  |---|---|---|
+  | Internal RAM after display init | 174 kB | 232 kB |
+  | Free after WiFi connected | 45 kB | **104 kB** |
+  | Largest free block | 32 kB | **61 kB** |
+
+  More free internal RAM is what keeps the web server, Bluetooth and the weather lookups
+  reliable. If the picture ever shifts down after the update, see Troubleshooting.
 - **SensorLib** and **WS_CH32_IO**: the versions bundled with Waveshare's ESP32-S3-Touch-LCD-4 examples
 - **ArduinoJson** v7
-- **NimBLE-Arduino** by h2zero, v2.x
+- **NimBLE-Arduino** by h2zero, 2.5.2 or later (tested with 2.5.2). Updating it replaces
+  `src/nimconfig.h`; the firmware needs nothing changed there
 
 ## ESP32-S3-Touch-LCD-4 Library file installation instructions
 
@@ -266,7 +279,7 @@ restarts the board so both radios come up cleanly. A 1200 mAh cell lasts roughly
 - **TF card**: on the V4 board the slot works over **SPI** (SCK GPIO2, MOSI GPIO1, MISO GPIO4), with chip select handled on the board. Waveshare's own `10_LVGL_SD` example uses SD_MMC and does not work on this revision (error `0x107`, `send_op_cond` timeout). Settings → SD card → **Probe card** tries both modes and every expander bit if a card is ever not found.
 - **Victron**: enable *Instant readout via Bluetooth* in VictronConnect and copy the encryption key from *Product info*.
 - **Bluetooth**: the mini only listens. Victron and RuuviTag data come from advertisements, so the board never connects to or pairs with anything.
-- **Weather** uses plain HTTP: HTTPS needs more internal RAM than is free with WiFi, Bluetooth and the display running.
+- **Weather** uses plain HTTP. HTTPS needs about 40 kB of internal RAM in one piece, which GFX Library 1.5.3 leaves no room for; with 1.6 there is room (61 kB largest block), but plain HTTP works and keeps that memory for the rest.
 
 ## Troubleshooting
 
@@ -276,7 +289,7 @@ restarts the board so both radios come up cleanly. A 1200 mAh cell lasts roughly
 | City lookup or weather fails | Check the `HTTP` and `Internal heap` lines in the Serial Monitor (failed requests are always shown). Low free RAM breaks network requests |
 | Victron device shows "Wrong key" | Key mistyped, or it changed in VictronConnect |
 | Victron device shows "No signal" | Out of range, or Instant readout switched off |
-| Image shifted down (tab bar too low) | The RGB panel lost sync, usually at startup. Press reset. The pixel clock is 10 MHz and the panel uses bounce buffers (`BOUNCE_LINES` in `board.cpp`, with GFX Library 1.6 or later); if it happens often, try 20 lines |
+| Image shifted down (tab bar too low) | The RGB panel lost sync, usually at startup or under heavy load. Press reset. The pixel clock is 10 MHz and the panel uses bounce buffers (`BOUNCE_LINES` in `board.cpp`, 10 lines with GFX Library 1.6 or later). If it happens often, set `BOUNCE_LINES` to 20: still about 40 kB less than GFX 1.5.3 |
 
 ## License
 

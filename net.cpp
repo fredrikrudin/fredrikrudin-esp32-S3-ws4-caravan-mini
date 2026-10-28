@@ -163,7 +163,7 @@ static bool do_weather() {
   snprintf(url, sizeof(url),
            "http://api.open-meteo.com/v1/forecast?latitude=%.4f&longitude=%.4f"
            "&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m"
-           "&daily=weather_code,temperature_2m_max,temperature_2m_min"
+           "&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset"
            "&timezone=auto&forecast_days=4&wind_speed_unit=ms",
            lat, lon);
 
@@ -184,6 +184,12 @@ static bool do_weather() {
   w.code = cur["weather_code"].as<int>();
   w.today_max = d["temperature_2m_max"][0].as<float>();
   w.today_min = d["temperature_2m_min"][0].as<float>();
+  {  // "2026-10-26T07:12", local time: kept as minutes after midnight
+    int hh, mi;
+    const char *sr = d["sunrise"][0] | "", *ss = d["sunset"][0] | "";
+    if (strlen(sr) >= 16 && sscanf(sr + 11, "%d:%d", &hh, &mi) == 2) w.sunrise_min = hh * 60 + mi;
+    if (strlen(ss) >= 16 && sscanf(ss + 11, "%d:%d", &hh, &mi) == 2) w.sunset_min = hh * 60 + mi;
+  }
 
   for (int i = 0; i < 3; i++) {
     const char *date = d["time"][i + 1] | "";
